@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Speed Door Digital Twin</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <div>
+            <h1>🚀 High Speed Door Digital Twin</h1>
+            <p class="subtitle">Live Industrial Monitoring Dashboard</p>
+        </div>
+
+        <div class="connection">
+            <span class="dot"></span>
+            Connected
+        </div>
+    </header>
+
+    <div class="kpiGrid">
+
+    <div class="kpiCard">
+
+        <h3>🟢 System Health</h3>
+
+        <h1 id="health">100%</h1>
+
+    </div>
+
+    <div class="kpiCard">
+
+        <h3>🚪 Door Position</h3>
+
+        <h1><span id="kpiDoor">0</span>%</h1>
+
+    </div>
+
+    <div class="kpiCard">
+
+        <h3>🔄 Total Cycles</h3>
+
+        <h1 id="totalCycle">0</h1>
+
+    </div>
+
+    <div class="kpiCard">
+
+        <h3>⚠ Fault Status</h3>
+
+        <h1 id="faultStatus">Normal</h1>
+
+    </div>
+
+</div>
+
+    <div class="topGrid">
+
+        <!-- Door -->
+        <div class="card">
+
+            <h2>Digital Twin</h2>
+
+            <div class="doorFrame">
+                <div id="doorVisual" class="door"></div>
+            </div>
+
+            <p class="position">
+                Position :
+                <span id="doorPosition">0</span>%
+            </p>
+
+        </div>
+
+        <!-- System -->
+
+        <div class="card">
+
+            <h2>System Status</h2>
+
+            <div class="row">
+                <span>Mode</span>
+                <span id="mode">--</span>
+            </div>
+
+            <div class="row">
+                <span>Safety</span>
+                <span id="safety">--</span>
+            </div>
+
+            <div class="row">
+                <span>Emergency</span>
+                <span id="emergency">--</span>
+            </div>
+
+            <div class="row">
+                <span>Fault</span>
+                <span id="fault">--</span>
+            </div>
+
+            <div class="row">
+                <span>Door State</span>
+                <span id="doorState">--</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Live Parameters -->
+
+ <div class="card fullCard">
+
+    <h2>Live Parameters</h2>
+
+    <div class="parameterGrid">
+
+        <div class="parameter">
+            <h3>Opening Speed</h3>
+            <p id="openSpeed">--</p>
+        </div>
+
+        <div class="parameter">
+            <h3>Closing Speed</h3>
+            <p id="closeSpeed">--</p>
+        </div>
+
+        <div class="parameter">
+            <h3>Cycle 1</h3>
+            <p id="cycle1">--</p>
+        </div>
+
+        <div class="parameter">
+            <h3>Cycle 2</h3>
+            <p id="cycle2">--</p>
+        </div>
+
+    </div>   <!-- parameterGrid -->
+
+</div>       <!-- fullCard -->
+
+<div class="card analytics">
+
+    <h2>📈 Live Analytics</h2>
+
+    <canvas id="doorChart"></canvas>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
