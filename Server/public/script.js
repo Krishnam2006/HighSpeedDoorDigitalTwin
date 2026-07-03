@@ -1,4 +1,5 @@
-const ws = new WebSocket("ws://10.173.222.246:3000");
+const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+const ws = new WebSocket(`${protocol}://${window.location.host}`);
 // ===== Chart =====
 
 const chartLabels = [];
