@@ -11,7 +11,9 @@ async function loadHistory() {
 
     const limit = limitSelect.value;
 
-    const response = await fetch(`/api/history?limit=${limit}`);
+   const response = await fetch(`/api/history?limit=${limit}&t=${Date.now()}`, {
+    cache: "no-store"
+});
     const data = await response.json();
 
     tbody.innerHTML = "";

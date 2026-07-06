@@ -157,6 +157,35 @@ app.get("/api/history", async (req, res) => {
 
 });
 
+// ===============================
+// Remote Control API
+// ===============================
+
+let latestCommand = "NONE";
+
+app.post("/api/control", (req, res) => {
+
+    latestCommand = req.body.command;
+
+    console.log("📤 Command Received:", latestCommand);
+
+    res.json({
+        success: true
+    });
+
+});
+
+app.get("/api/control", (req, res) => {
+
+    res.json({
+        command: latestCommand
+    });
+
+    // Command sirf ek baar bhejna
+    latestCommand = "NONE";
+
+});
+
 // Browser connect
 wss.on("connection", ws => {
 

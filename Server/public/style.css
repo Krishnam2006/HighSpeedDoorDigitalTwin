@@ -256,3 +256,43 @@ canvas{
     background:#67e8f9;
 
 }
+.controlButtons{
+
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    margin-top:20px;
+
+}
+
+.controlButtons button{
+
+    padding:18px 40px;
+    font-size:20px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.25s;
+
+}
+
+#openBtn{
+
+    background:#22c55e;
+    color:white;
+
+}
+
+#closeBtn{
+
+    background:#ef4444;
+    color:white;
+
+}
+
+.controlButtons button:hover{
+
+    transform:scale(1.05);
+
+}
