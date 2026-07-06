@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>History</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Arial;
+    padding:30px;
+}
+
+h1{
+    color:#22d3ee;
+}
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+
+}
+
+th{
+
+    background:#22d3ee;
+    color:black;
+    padding:10px;
+
+}
+
+td{
+
+    background:#1e293b;
+    padding:10px;
+    text-align:center;
+    border-bottom:1px solid #334155;
+
+}
+
+button{
+
+padding:10px 18px;
+background:#22d3ee;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-bottom:20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>📊 Door History</h1>
+
+<button onclick="location.href='/'">
+← Back Dashboard
+</button>
+
+<table id="historyTable">
+
+<thead>
+
+<tr>
+
+<th>Time</th>
+
+<th>Controller</th>
+
+<th>Mode</th>
+
+<th>Safety</th>
+
+<th>Cycle</th>
+
+<th>Position</th>
+
+<th>Fault</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<script src="history.js"></script>
+
+</body>
+
+</html>
