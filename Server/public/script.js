@@ -256,3 +256,40 @@ doorChart.update();
 ws.onerror = () => {
     console.log("WebSocket Error");
 };
+// ===============================
+// Remote Control
+// ===============================
+
+async function sendCommand(command){
+
+    const response = await fetch("/api/control",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            command:command
+        })
+
+    });
+
+    const result = await response.json();
+
+    console.log(result);
+
+}
+
+document.getElementById("openBtn").addEventListener("click",()=>{
+
+    sendCommand("OPEN");
+
+});
+
+document.getElementById("closeBtn").addEventListener("click",()=>{
+
+    sendCommand("CLOSE");
+
+});
