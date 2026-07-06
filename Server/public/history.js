@@ -1,6 +1,8 @@
 async function loadHistory() {
 
-    const response = await fetch("/api/history");
+    const limit = document.getElementById("limitSelect").value;
+
+    const response = await fetch(`/api/history?limit=${limit}`);
 
     const data = await response.json();
 
@@ -8,7 +10,15 @@ async function loadHistory() {
 
     tbody.innerHTML = "";
 
+    const search = document
+        .getElementById("searchBox")
+        .value
+        .toLowerCase();
+
     data.forEach(row => {
+
+        if (!row.controllerId.toLowerCase().includes(search))
+            return;
 
         let mode = "";
 
@@ -41,11 +51,13 @@ async function loadHistory() {
 
             <td>${row.fault}</td>
 
-        </tr>
-        `;
-
+        </tr>`;
     });
 
 }
 
 loadHistory();
+
+document.getElementById("searchBox").addEventListener("input", loadHistory);
+
+document.getElementById("limitSelect").addEventListener("change", loadHistory);

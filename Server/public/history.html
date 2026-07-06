@@ -22,6 +22,25 @@ h1{
     color:#22d3ee;
 }
 
+<div class="history-tools">
+
+    <input
+        type="text"
+        id="searchBox"
+        placeholder="Search Controller..."
+    >
+
+    <select id="limitSelect">
+        <option value="20">20 Records</option>
+        <option value="50" selected>50 Records</option>
+        <option value="100">100 Records</option>
+        <option value="500">500 Records</option>
+    </select>
+
+    <button onclick="loadHistory()">Refresh</button>
+
+</div>
+
 table{
 
     width:100%;

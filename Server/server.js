@@ -130,39 +130,30 @@ latestData.doorPosition
 
 app.get("/api/history", async (req, res) => {
 
-    try {
+    const limit = Number(req.query.limit) || 50;
 
-        const rows = await db.all(`
+    const rows = await db.all(
 
-            SELECT
-                timestamp,
-                controllerId,
-                mode,
-                safety,
-                emergency,
-                fault,
-                cycle1,
-                cycle2,
-                doorState,
-                doorPosition
+        `SELECT
+        timestamp,
+        controllerId,
+        mode,
+        safety,
+        emergency,
+        fault,
+        cycle1,
+        cycle2,
+        doorState,
+        doorPosition
+        FROM door_logs
+        ORDER BY id DESC
+        LIMIT ?`,
 
-            FROM door_logs
+        [limit]
 
-            ORDER BY id DESC
+    );
 
-            LIMIT 100
-
-        `);
-
-        res.json(rows);
-
-    } catch(err) {
-
-        console.log(err);
-
-        res.status(500).send("Database Error");
-
-    }
+    res.json(rows);
 
 });
 
