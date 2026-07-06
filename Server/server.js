@@ -124,6 +124,48 @@ latestData.doorPosition
     res.send("OK");
 });
 
+// ===============================
+// History API
+// ===============================
+
+app.get("/api/history", async (req, res) => {
+
+    try {
+
+        const rows = await db.all(`
+
+            SELECT
+                timestamp,
+                controllerId,
+                mode,
+                safety,
+                emergency,
+                fault,
+                cycle1,
+                cycle2,
+                doorState,
+                doorPosition
+
+            FROM door_logs
+
+            ORDER BY id DESC
+
+            LIMIT 100
+
+        `);
+
+        res.json(rows);
+
+    } catch(err) {
+
+        console.log(err);
+
+        res.status(500).send("Database Error");
+
+    }
+
+});
+
 // Browser connect
 wss.on("connection", ws => {
 
