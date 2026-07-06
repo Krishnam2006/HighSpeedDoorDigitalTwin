@@ -1,83 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>History</title>
+    <title>Door History</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
 
-<style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Segoe UI,Arial,sans-serif;
+        }
 
-body{
-    background:#0f172a;
-    color:white;
-    font-family:Arial;
-    padding:30px;
-}
+        body{
+            background:#0f172a;
+            color:white;
+            padding:30px;
+        }
 
-h1{
-    color:#22d3ee;
-}
+        h1{
+            color:#22d3ee;
+            margin-bottom:20px;
+        }
 
-<div class="history-tools">
+        .history-tools{
 
-    <input
-        type="text"
-        id="searchBox"
-        placeholder="Search Controller..."
-    >
+            display:flex;
+            gap:15px;
+            align-items:center;
+            margin:20px 0;
+            flex-wrap:wrap;
 
-    <select id="limitSelect">
-        <option value="20">20 Records</option>
-        <option value="50" selected>50 Records</option>
-        <option value="100">100 Records</option>
-        <option value="500">500 Records</option>
-    </select>
+        }
 
-    <button onclick="loadHistory()">Refresh</button>
+        .history-tools input,
+        .history-tools select{
 
-</div>
+            padding:10px 14px;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
 
-table{
+        }
 
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
+        button{
 
-}
+            padding:10px 20px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            background:#22d3ee;
+            color:#0f172a;
+            font-weight:bold;
+            transition:.25s;
 
-th{
+        }
 
-    background:#22d3ee;
-    color:black;
-    padding:10px;
+        button:hover{
 
-}
+            background:#67e8f9;
 
-td{
+        }
 
-    background:#1e293b;
-    padding:10px;
-    text-align:center;
-    border-bottom:1px solid #334155;
+        table{
 
-}
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
 
-button{
+        }
 
-padding:10px 18px;
-background:#22d3ee;
-border:none;
-border-radius:8px;
-cursor:pointer;
-margin-bottom:20px;
+        th{
 
-}
+            background:#22d3ee;
+            color:black;
+            padding:12px;
 
-</style>
+        }
+
+        td{
+
+            background:#1e293b;
+            padding:12px;
+            text-align:center;
+            border-bottom:1px solid #334155;
+
+        }
+
+    </style>
 
 </head>
 
@@ -89,33 +104,50 @@ margin-bottom:20px;
 ← Back Dashboard
 </button>
 
+<div class="history-tools">
+
+    <input
+        id="searchBox"
+        type="text"
+        placeholder="Search Controller..."
+    >
+
+    <select id="limitSelect">
+
+        <option value="20">20 Records</option>
+        <option value="50" selected>50 Records</option>
+        <option value="100">100 Records</option>
+        <option value="500">500 Records</option>
+
+    </select>
+
+    <button onclick="loadHistory()">
+        Refresh
+    </button>
+
+</div>
+
 <table id="historyTable">
 
-<thead>
+    <thead>
 
-<tr>
+        <tr>
 
-<th>Time</th>
+            <th>Time</th>
+            <th>Controller</th>
+            <th>Mode</th>
+            <th>Safety</th>
+            <th>Cycle</th>
+            <th>Position</th>
+            <th>Fault</th>
 
-<th>Controller</th>
+        </tr>
 
-<th>Mode</th>
+    </thead>
 
-<th>Safety</th>
+    <tbody>
 
-<th>Cycle</th>
-
-<th>Position</th>
-
-<th>Fault</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-</tbody>
+    </tbody>
 
 </table>
 

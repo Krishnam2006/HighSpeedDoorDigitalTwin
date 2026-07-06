@@ -1,19 +1,22 @@
 async function loadHistory() {
 
-    const limit = document.getElementById("limitSelect").value;
+    const limitSelect = document.getElementById("limitSelect");
+    const searchBox = document.getElementById("searchBox");
+    const tbody = document.querySelector("#historyTable tbody");
+
+    if (!limitSelect || !searchBox || !tbody) {
+        console.log("History page elements not found.");
+        return;
+    }
+
+    const limit = limitSelect.value;
 
     const response = await fetch(`/api/history?limit=${limit}`);
-
     const data = await response.json();
-
-    const tbody = document.querySelector("#historyTable tbody");
 
     tbody.innerHTML = "";
 
-    const search = document
-        .getElementById("searchBox")
-        .value
-        .toLowerCase();
+    const search = searchBox.value.toLowerCase();
 
     data.forEach(row => {
 
@@ -36,28 +39,26 @@ async function loadHistory() {
 
         tbody.innerHTML += `
         <tr>
-
             <td>${row.timestamp}</td>
-
             <td>${row.controllerId}</td>
-
             <td>${mode}</td>
-
             <td>${safety}</td>
-
             <td>${row.cycle1}</td>
-
             <td>${row.doorPosition}%</td>
-
             <td>${row.fault}</td>
-
         </tr>`;
     });
 
 }
 
-loadHistory();
+window.onload = () => {
 
-document.getElementById("searchBox").addEventListener("input", loadHistory);
+    loadHistory();
 
-document.getElementById("limitSelect").addEventListener("change", loadHistory);
+    document.getElementById("searchBox")
+        .addEventListener("input", loadHistory);
+
+    document.getElementById("limitSelect")
+        .addEventListener("change", loadHistory);
+
+};
