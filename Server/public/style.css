@@ -219,3 +219,40 @@ canvas{
     margin:0;
 
 }
+.topButtons{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+}
+
+.historyBtn{
+
+    background:#22d3ee;
+
+    color:#0f172a;
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+}
+
+.historyBtn:hover{
+
+    transform:translateY(-2px);
+
+    background:#67e8f9;
+
+}
