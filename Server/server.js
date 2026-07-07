@@ -158,6 +158,36 @@ app.get("/api/history", async (req, res) => {
 });
 
 // ===============================
+// CSV Export
+// ===============================
+
+app.get("/api/export", async (req, res) => {
+
+    const rows = await db.all(`
+        SELECT *
+        FROM door_logs
+        ORDER BY id DESC
+    `);
+
+    let csv =
+`Timestamp,Controller,Mode,Safety,Emergency,Fault,Cycle1,Cycle2,DoorState,DoorPosition\n`;
+
+    rows.forEach(r => {
+
+        csv +=
+`${r.timestamp},${r.controllerId},${r.mode},${r.safety},${r.emergency},${r.fault},${r.cycle1},${r.cycle2},${r.doorState},${r.doorPosition}\n`;
+
+    });
+
+    res.header("Content-Type","text/csv");
+
+    res.attachment("DoorHistory.csv");
+
+    res.send(csv);
+
+});
+
+// ===============================
 // Remote Control API
 // ===============================
 
