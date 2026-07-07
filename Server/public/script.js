@@ -180,13 +180,33 @@ document.getElementById("kpiDoor").innerText = d.doorPosition;
 
 document.getElementById("totalCycle").innerText = d.cycle1;
 
-// Health %
+// ===============================
+// Smart Health Score
+// ===============================
 
 let health = 100;
 
-if(d.fault != 0) health -= 40;
+// Fault
+if (d.fault != 0)
+    health -= 35;
 
-if(d.emergency == 8) health -= 20;
+// Emergency
+if (d.emergency == 8)
+    health -= 20;
+
+// Safety Trigger
+if (d.safety != 8)
+    health -= 10;
+
+// High Cycle Count
+if (d.cycle1 > 1000)
+    health -= 5;
+
+if (d.cycle1 > 5000)
+    health -= 10;
+
+if (health < 0)
+    health = 0;
 
 document.getElementById("health").innerText = health + "%";
 
@@ -220,6 +240,21 @@ document.getElementById("doorState").innerText = state;
    // 🚪 Improved Door Animation
 const door = document.getElementById("doorVisual");
 let pos = Number(d.doorPosition);
+
+// Alert Message
+
+let alert = "✅ System Healthy";
+
+if (d.fault != 0)
+    alert = "🔴 Fault Detected";
+
+else if (d.emergency == 8)
+    alert = "🟠 Emergency Active";
+
+else if (health < 70)
+    alert = "🟡 Maintenance Recommended";
+
+document.getElementById("alertText").innerText = alert;
 
 // Door height (0% = fully closed, 100% = fully open)
 const frameHeight = 300;
