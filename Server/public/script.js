@@ -286,6 +286,7 @@ if (chartLabels.length > 20) {
 }
 
 doorChart.update();
+updateAlarm(d);
 
 };
 ws.onerror = () => {
@@ -362,3 +363,33 @@ async function loadPrediction(){
 setInterval(loadPrediction,3000);
 
 loadPrediction();
+function updateAlarm(d){
+
+    const panel = document.getElementById("alarmPanel");
+
+    if(d.fault != 0){
+
+        panel.innerHTML = "🔴 MOTOR FAULT DETECTED";
+        panel.style.color = "#ef4444";
+
+    }
+    else if(d.emergency != 0){
+
+        panel.innerHTML = "🟠 EMERGENCY STOP ACTIVE";
+        panel.style.color = "#f59e0b";
+
+    }
+    else if(Number(d.cycle1) > 5000){
+
+        panel.innerHTML = "🟡 MAINTENANCE DUE SOON";
+        panel.style.color = "#facc15";
+
+    }
+    else{
+
+        panel.innerHTML = "🟢 NO ACTIVE ALARM";
+        panel.style.color = "#22c55e";
+
+    }
+
+}
