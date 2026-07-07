@@ -158,6 +158,28 @@ app.get("/api/history", async (req, res) => {
 });
 
 // ===============================
+// Recent Events API
+// ===============================
+
+app.get("/api/events", async (req, res) => {
+
+    const rows = await db.all(`
+        SELECT
+        timestamp,
+        doorState,
+        fault,
+        emergency,
+        safety
+        FROM door_logs
+        ORDER BY id DESC
+        LIMIT 20
+    `);
+
+    res.json(rows);
+
+});
+
+// ===============================
 // Dashboard Statistics API
 // ===============================
 

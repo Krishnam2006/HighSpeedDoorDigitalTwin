@@ -393,3 +393,43 @@ function updateAlarm(d){
     }
 
 }
+async function loadEvents(){
+
+    const response = await fetch("/api/events");
+
+    const data = await response.json();
+
+    const div = document.getElementById("eventList");
+
+    div.innerHTML = "";
+
+    data.forEach(e=>{
+
+        let text = "Door Status";
+
+        if(e.fault != 0)
+            text = "🔴 Fault Detected";
+
+        else if(e.emergency != 0)
+            text = "🟠 Emergency Activated";
+
+        else if(e.safety != 8)
+            text = "🟡 Safety Trigger";
+
+        else if(e.doorState == 0)
+            text = "🚪 Door Closed";
+
+        else if(e.doorState == 5)
+            text = "🚪 Door Opened";
+
+        div.innerHTML += `
+        <p style="padding:8px 0;border-bottom:1px solid #334155">
+            ${e.timestamp} — ${text}
+        </p>`;
+    });
+
+}
+
+setInterval(loadEvents,5000);
+
+loadEvents();
