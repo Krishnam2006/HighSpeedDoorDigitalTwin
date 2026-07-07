@@ -158,6 +158,43 @@ app.get("/api/history", async (req, res) => {
 });
 
 // ===============================
+// Dashboard Statistics API
+// ===============================
+
+app.get("/api/stats", async (req, res) => {
+
+    const totalCycles = await db.get(`
+        SELECT MAX(cycle1) AS total
+        FROM door_logs
+    `);
+
+    const totalFaults = await db.get(`
+        SELECT COUNT(*) AS faults
+        FROM door_logs
+        WHERE fault != 0
+    `);
+
+    const emergencyCount = await db.get(`
+        SELECT COUNT(*) AS emergency
+        FROM door_logs
+        WHERE emergency != 0
+    `);
+
+    const avgPosition = await db.get(`
+        SELECT AVG(doorPosition) AS avgPos
+        FROM door_logs
+    `);
+
+    res.json({
+        totalCycles: totalCycles.total || 0,
+        totalFaults: totalFaults.faults || 0,
+        emergencyCount: emergencyCount.emergency || 0,
+        averagePosition: Math.round(avgPosition.avgPos || 0)
+    });
+
+});
+
+// ===============================
 // CSV Export
 // ===============================
 

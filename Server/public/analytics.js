@@ -57,3 +57,24 @@ async function loadAnalytics() {
 }
 
 loadAnalytics();
+async function loadStats(){
+
+    const response = await fetch("/api/stats");
+
+    const stats = await response.json();
+
+    document.getElementById("cycleCard").innerText =
+        stats.totalCycles;
+
+    document.getElementById("faultCard").innerText =
+        stats.totalFaults;
+
+    document.getElementById("emergencyCard").innerText =
+        stats.emergencyCount;
+
+    document.getElementById("positionCard").innerText =
+        stats.averagePosition + "%";
+
+}
+
+loadStats();
