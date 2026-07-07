@@ -328,3 +328,37 @@ document.getElementById("closeBtn").addEventListener("click",()=>{
     sendCommand("CLOSE");
 
 });
+// ===============================
+// AI Prediction
+// ===============================
+
+async function loadPrediction(){
+
+    try{
+
+        const response = await fetch("/api/predict");
+
+        const ai = await response.json();
+
+        document.getElementById("aiRisk").innerText =
+            ai.risk;
+
+        document.getElementById("remainingCycles").innerText =
+            ai.remainingCycles;
+
+        document.getElementById("recommendation").innerText =
+            ai.recommendation;
+
+    }
+
+    catch(e){
+
+        console.log(e);
+
+    }
+
+}
+
+setInterval(loadPrediction,3000);
+
+loadPrediction();

@@ -195,6 +195,63 @@ app.get("/api/stats", async (req, res) => {
 });
 
 // ===============================
+// AI Prediction API
+// ===============================
+
+app.get("/api/predict", async (req, res) => {
+
+    const last = await db.get(`
+        SELECT *
+        FROM door_logs
+        ORDER BY id DESC
+        LIMIT 1
+    `);
+
+    let health = 100;
+
+    if(last.fault != 0)
+        health -= 35;
+
+    if(last.emergency != 0)
+        health -= 20;
+
+    if(last.safety != 8)
+        health -= 10;
+
+    if(last.cycle1 > 5000)
+        health -= 10;
+
+    let risk = "Low";
+
+    if(health < 80)
+        risk = "Medium";
+
+    if(health < 60)
+        risk = "High";
+
+    res.json({
+
+        health,
+
+        risk,
+
+        remainingCycles: Math.max(0,15000-last.cycle1),
+
+        recommendation:
+
+        health > 80 ?
+
+        "System Healthy"
+
+        :
+
+        "Inspect Motor, Belt & Roller"
+
+    });
+
+});
+
+// ===============================
 // CSV Export
 // ===============================
 
