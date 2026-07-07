@@ -53,6 +53,11 @@ async function initDatabase() {
 
 }
 
+// Smart Logging
+
+let lastSavedData = null;
+let lastSaveTime = 0;
+
 let latestData = {
     controllerId: "HSD_GUJ_001",
     mode: 0,
@@ -76,10 +81,44 @@ app.post("/api/data", async (req, res) => {
 console.log("API HIT");
     latestData = req.body;
 
+    // ===============================
+// Smart Logging Check
+// ===============================
+
+const now = Date.now();
+
+const dataChanged =
+    JSON.stringify(latestData) !== JSON.stringify(lastSavedData);
+
+const timeElapsed =
+    (now - lastSaveTime) > 5000;
+
+// Agar data same hai aur 5 sec bhi nahi hue
+// to database me save mat karo
+
+if (!dataChanged && !timeElapsed) {
+
+    wss.clients.forEach(client => {
+
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(latestData));
+        }
+
+    });
+
+    return res.send("Skipped");
+
+}
+
     console.log("Data Received:");
     console.log(latestData);
 
     await db.run(
+        // Update Smart Logging Memory
+
+lastSavedData = JSON.parse(JSON.stringify(latestData));
+
+lastSaveTime = now;
 
 `INSERT INTO door_logs(
 
