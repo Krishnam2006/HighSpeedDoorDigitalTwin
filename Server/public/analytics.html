@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Analytics</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+background:#0f172a;
+color:white;
+font-family:Segoe UI;
+padding:30px;
+}
+
+h1{
+color:#22d3ee;
+margin-bottom:20px;
+}
+
+.chartCard{
+
+background:#1e293b;
+
+padding:20px;
+
+border-radius:15px;
+
+margin-top:25px;
+
+}
+
+button{
+
+padding:12px 20px;
+
+background:#22d3ee;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+margin-bottom:20px;
+
+font-weight:bold;
+
+}
+
+canvas{
+
+height:400px !important;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>📈 Analytics Dashboard</h1>
+
+<button onclick="location.href='/'">
+← Dashboard
+</button>
+
+<div class="chartCard">
+
+<h2>Door Position History</h2>
+
+<canvas id="positionChart"></canvas>
+
+</div>
+
+<script src="analytics.js"></script>
+
+</body>
+
+</html>
