@@ -225,7 +225,7 @@ app.get("/api/history", async (req, res) => {
 
 `
 SELECT
-datetime(timestamp,'+5 hours','+30 minutes') AS timestamp,
+timestamp,
 controllerId,
 mode,
 safety,
@@ -259,7 +259,7 @@ app.get("/api/events", async (req, res) => {
 
     const rows = await db.all(`
         SELECT
-        datetime(timestamp,'+5 hours','+30 minutes') AS timestamp,
+        timestamp,
         doorState,
         fault,
         emergency,
