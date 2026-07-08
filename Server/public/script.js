@@ -470,21 +470,24 @@ async function checkConnection() {
         if (data.status === "ONLINE") {
 
             status.innerHTML = "🟢 Connected";
-            status.style.background = "#22c55e";
+            status.style.background = "";
+status.style.color = "#22c55e";
 
         }
 
         else if (data.status === "SLOW") {
 
             status.innerHTML = "🟡 Slow Communication";
-            status.style.background = "#f59e0b";
+            status.style.background = "";
+status.style.color = "#f59e0b";
 
         }
 
         else {
 
             status.innerHTML = "🔴 Controller Offline";
-            status.style.background = "#ef4444";
+            status.style.background = "";
+status.style.color = "#ef4444";
 
         }
 

@@ -296,3 +296,43 @@ canvas{
     transform:scale(1.05);
 
 }
+.status{
+
+    background:rgba(255,255,255,.08);
+
+    color:#22c55e;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+    min-width:220px;
+
+    text-align:center;
+
+}
+#connectionStatus{
+
+    background: rgba(255,255,255,.08) !important;
+
+    color: #22c55e;
+
+    padding: 12px 22px;
+
+    border-radius: 12px;
+
+    font-weight: bold;
+
+    min-width: 220px;
+
+    text-align: center;
+
+    transition: .3s;
+
+}
