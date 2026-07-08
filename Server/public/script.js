@@ -172,6 +172,14 @@ document.getElementById("fault").innerText =
     document.getElementById("closeSpeed").innerText = d.closingSpeed;
     document.getElementById("cycle1").innerText = d.cycle1;
     document.getElementById("cycle2").innerText = d.cycle2;
+    document.getElementById("motorLoad").innerText =
+    d.motorLoad ?? "--";
+
+document.getElementById("openingLimit").innerText =
+    d.openingLimit ?? "--";
+
+document.getElementById("closingLimit").innerText =
+    d.closingLimit ?? "--";
 
     document.getElementById("doorPosition").innerText = d.doorPosition;
     // KPI Cards
