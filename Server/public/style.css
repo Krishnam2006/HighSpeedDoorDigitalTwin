@@ -176,6 +176,8 @@ canvas{
 
     margin:25px 0;
 
+    align-items: stretch;
+
 }
 
 .kpiCard{
@@ -191,6 +193,8 @@ canvas{
     box-shadow:0 0 20px rgba(0,229,255,.12);
 
     transition:.3s;
+    
+    min-height:220px;
 
 }
 
