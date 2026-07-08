@@ -29,7 +29,7 @@ async function initDatabase() {
 
             controllerId TEXT,
 
-            timestamp DATETIME DEFAULT (datetime('now','+5 hours','+30 minutes'));
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
 
             mode INTEGER,
             safety INTEGER,
@@ -96,6 +96,24 @@ app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 });
+
+function getISTTimestamp() {
+
+    const now = new Date();
+
+    const ist = new Date(
+        now.toLocaleString("en-US", {
+            timeZone: "Asia/Kolkata"
+        })
+    );
+
+    return ist
+        .toISOString()
+        .replace("T", " ")
+        .substring(0, 19);
+
+}
+
 // ESP32 data receive karega
 app.post("/api/data", async (req, res) => {
 console.log("API HIT");
@@ -164,11 +182,7 @@ motorLoad
 )
 
 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
-
-new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000))
-    .toISOString()
-    .replace("T", " ")
-    .substring(0, 19),
+getISTTimestamp(),
 latestData.controllerId,
 latestData.mode,
 latestData.safety,
@@ -211,7 +225,7 @@ app.get("/api/history", async (req, res) => {
 
 `
 SELECT
-timestamp,
+datetime(timestamp,'+5 hours','+30 minutes') AS timestamp,
 controllerId,
 mode,
 safety,
@@ -245,7 +259,7 @@ app.get("/api/events", async (req, res) => {
 
     const rows = await db.all(`
         SELECT
-        timestamp,
+        datetime(timestamp,'+5 hours','+30 minutes') AS timestamp,
         doorState,
         fault,
         emergency,
@@ -371,7 +385,7 @@ app.get("/api/export", async (req, res) => {
     rows.forEach(r => {
 
         csv +=
-`${r.timestamp},${r.controllerId},${r.mode},${r.safety},${r.emergency},${r.fault},${r.cycle1},${r.cycle2},${r.doorState},${r.doorPosition}\n`;
+`${new Date(r.timestamp + "Z").toLocaleString("en-IN")},${r.controllerId},${r.mode},${r.safety},${r.emergency},${r.fault},${r.cycle1},${r.cycle2},${r.doorState},${r.doorPosition}\n`;
 
     });
 
