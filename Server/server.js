@@ -387,7 +387,7 @@ if (!last) {
 
         :
 
-        "Inspect Motor, Belt & Roller"
+        "Inspect Motor, Brake and Encoder"
 
     });
 
