@@ -374,22 +374,36 @@ function updateAlarm(d){
 
     const panel = document.getElementById("alarmPanel");
 
-    if(d.fault != 0){
+    const now = Date.now();
 
-        panel.innerHTML = "🔴 MOTOR FAULT DETECTED";
+    let currentAlarm = "";
+
+    if(Number(d.fault) == 6)
+        currentAlarm = "🔴 MOTOR / BRAKE FAILURE";
+
+    else if(Number(d.fault) == 13)
+        currentAlarm = "🔴 INTERNAL ENCODER FAILURE";
+
+    else if(Number(d.fault) == 29)
+        currentAlarm = "🔴 EXTERNAL ENCODER FAILURE";
+
+    else if(Number(d.emergency) != 0)
+        currentAlarm = "🟠 EMERGENCY STOP ACTIVE";
+
+    else if(Number(d.cycle1) > 5000)
+        currentAlarm = "🟡 MAINTENANCE DUE SOON";
+
+    if(currentAlarm !== ""){
+
+        lastFaultMessage = currentAlarm;
+        lastFaultTime = now;
+
+    }
+
+    if(now - lastFaultTime < 10000){
+
+        panel.innerHTML = lastFaultMessage;
         panel.style.color = "#ef4444";
-
-    }
-    else if(d.emergency != 0){
-
-        panel.innerHTML = "🟠 EMERGENCY STOP ACTIVE";
-        panel.style.color = "#f59e0b";
-
-    }
-    else if(Number(d.cycle1) > 5000){
-
-        panel.innerHTML = "🟡 MAINTENANCE DUE SOON";
-        panel.style.color = "#facc15";
 
     }
     else{
