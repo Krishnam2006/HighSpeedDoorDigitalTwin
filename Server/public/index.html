@@ -23,31 +23,37 @@
 
             <div class="topButtons">
 
-                <select id="controllerSelect" class="historyBtn">
+    <select id="controllerSelect" class="historyBtn">
+        <option value="HSD_GUJ_001">
+            HSD_GUJ_001
+        </option>
+    </select>
 
-    <option value="HSD_GUJ_001">
-        HSD_GUJ_001
-    </option>
+    <button class="historyBtn" onclick="window.location='history.html'">
+        📊 History
+    </button>
 
-</select>
+    <button class="historyBtn" onclick="window.location='analytics.html'">
+        📈 Analytics
+    </button>
 
-                <button class="historyBtn" onclick="window.location='history.html'">
-                    📊 History
-                </button>
-                <button class="historyBtn"
-    onclick="window.location='analytics.html'">
-    📈 Analytics
-</button>
+    <div class="status" id="connectionStatus">
+        🟢 Connected
+    </div>
 
-                <div class="status" id="connectionStatus">
-    🟢 Connected
 </div>
-            </div>
 
         </header>
 
         <div class="kpiGrid">
 
+            <div class="kpiCard">
+
+    <h3>⚡ Response Time</h3>
+
+    <h1 id="latency">0 ms</h1>
+
+</div>
             <div class="kpiCard">
 
                 <h3>🟢 System Health</h3>
@@ -80,28 +86,16 @@
                 <p id="alertText" style="margin-top:10px;color:#facc15;">
     System Healthy
 </p>
-<div class="card fullCard">
 
-    <h2>🤖 AI Predictive Maintenance</h2>
+<div class="kpiCard">
 
-    <div class="parameterGrid">
+    <h3>⚠ Fault Status</h3>
 
-        <div class="parameter">
-            <h3>Risk Level</h3>
-            <p id="aiRisk">--</p>
-        </div>
+    <h1 id="faultStatus">Normal</h1>
 
-        <div class="parameter">
-            <h3>Remaining Cycles</h3>
-            <p id="remainingCycles">--</p>
-        </div>
-
-        <div class="parameter">
-            <h3>Recommendation</h3>
-            <p id="recommendation">--</p>
-        </div>
-
-    </div>
+    <p id="alertText" style="margin-top:10px;color:#facc15;">
+        System Healthy
+    </p>
 
 </div>
 
@@ -129,58 +123,99 @@
 
 </div>
 
-            <!-- Door -->
-            <div class="card">
+   <!-- Door -->
+<div class="card">
 
-                <h2>Digital Twin</h2>
+    <h2>Digital Twin</h2>
 
-                <div class="doorFrame">
-                    <div id="doorVisual" class="door"></div>
-                </div>
+    <div class="doorFrame">
 
-                <p class="position">
-                    Position :
-                    <span id="doorPosition">0</span>%
-                </p>
+        <div class="doorRail leftRail"></div>
 
-            </div>
+        <div class="doorRail rightRail"></div>
 
-            <!-- System -->
+        <div class="doorTop"></div>
 
-            <div class="card">
+        <div id="doorVisual" class="door"></div>
 
-                <h2>System Status</h2>
+    </div>
 
-                <div class="row">
-                    <span>Mode</span>
-                    <span id="mode">--</span>
-                </div>
+    <p class="position">
+        Position :
+        <span id="doorPosition">0</span>%
+    </p>
 
-                <div class="row">
-                    <span>Safety</span>
-                    <span id="safety">--</span>
-                </div>
+</div>
 
-                <div class="row">
-                    <span>Emergency</span>
-                    <span id="emergency">--</span>
-                </div>
+<div class="card">
 
-                <div class="row">
-                    <span>Fault</span>
-                    <span id="fault">--</span>
-                </div>
+    <h2>System Status</h2>
 
-                <div class="row">
-                    <span>Door State</span>
-                    <span id="doorState">--</span>
-                </div>
+    
+    <div class="row">
+        <span>Controller</span>
+        <span id="controllerId">--</span>
+    </div>
 
-            </div>
+    <div class="row">
+        <span>Last Update</span>
+        <span id="lastUpdate">--</span>
+    </div>
+
+    <div class="row">
+        <span>Mode</span>
+        <span id="mode">--</span>
+    </div>
+
+    <div class="row">
+        <span>Safety</span>
+        <span id="safety">--</span>
+    </div>
+
+    <div class="row">
+        <span>Emergency</span>
+        <span id="emergency">--</span>
+    </div>
+
+    <div class="row">
+        <span>Fault</span>
+        <span id="fault">--</span>
+    </div>
+
+    <div class="row">
+        <span>Door State</span>
+        <span id="doorState">--</span>
+    </div>
+
+</div>   <!-- topGrid ends -->
 
         </div>
 
         <div class="card fullCard">
+              <h2>🤖 AI Predictive Maintenance</h2>
+
+    <div class="parameterGrid">
+
+        <div class="parameter">
+            <h3>Risk Level</h3>
+            <p id="aiRisk">--</p>
+        </div>
+
+        <div class="parameter">
+            <h3>Remaining Cycles</h3>
+            <p id="remainingCycles">--</p>
+        </div>
+
+        <div class="parameter">
+            <h3>Recommendation</h3>
+            <p id="recommendation">--</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card fullCard">
 
     <h2>🎮 Remote Control</h2>
 

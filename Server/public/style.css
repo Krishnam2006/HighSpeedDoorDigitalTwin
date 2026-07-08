@@ -82,14 +82,75 @@ body{
     position:relative;
 }
 
-.door{
+.doorRail{
+
     position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
+
+    top:0;
+
+    width:12px;
+
     height:100%;
-    background:linear-gradient(#ef4444,#b91c1c);
-    transition:transform .15s linear;
+
+    background:#64748b;
+
+    z-index:5;
+
+}
+
+.leftRail{
+
+    left:0;
+
+}
+
+.rightRail{
+
+    right:0;
+
+}
+
+.doorTop{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:18px;
+
+    background:#475569;
+
+    z-index:6;
+
+}
+
+.door{
+
+    position:absolute;
+
+    left:12px;
+
+    top:18px;
+
+    width:calc(100% - 24px);
+
+    height:calc(100% - 18px);
+
+    background:linear-gradient(180deg,#ef4444,#dc2626);
+
+    border-radius:4px;
+
+    transition:transform .18s linear,
+               background .25s;
+
+    z-index:2;
+
+    box-shadow:inset 0 0 20px rgba(255,255,255,.15);
+
 }
 
 .position{
@@ -193,7 +254,7 @@ canvas{
     box-shadow:0 0 20px rgba(0,229,255,.12);
 
     transition:.3s;
-    
+
     min-height:220px;
 
 }
@@ -338,5 +399,68 @@ canvas{
     text-align: center;
 
     transition: .3s;
+
+}
+.door::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:repeating-linear-gradient(
+
+        to bottom,
+
+        rgba(255,255,255,.12) 0px,
+
+        rgba(255,255,255,.12) 3px,
+
+        transparent 3px,
+
+        transparent 28px
+
+    );
+
+    pointer-events:none;
+
+}
+
+.door::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:linear-gradient(
+
+        90deg,
+
+        rgba(255,255,255,.18),
+
+        transparent 30%,
+
+        transparent 70%,
+
+        rgba(0,0,0,.15)
+
+    );
+
+    pointer-events:none;
 
 }

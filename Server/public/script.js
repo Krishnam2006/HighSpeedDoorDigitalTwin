@@ -161,6 +161,11 @@ const faultText = {
 };
 
     // System data
+    document.getElementById("controllerId").innerText =
+    d.controllerId;
+    document.getElementById("lastUpdate").innerText =
+    new Date().toLocaleTimeString();
+    
     document.getElementById("mode").innerText =
     modeText[d.mode] || d.mode;
 
@@ -268,20 +273,32 @@ else if (health < 70)
 document.getElementById("alertText").innerText = alert;
 
 // Door height (0% = fully closed, 100% = fully open)
-const frameHeight = 300;
+const frameHeight = 282;
 
-// Door moves UP while opening
+// Door moves upward smoothly
 door.style.transform = `translateY(${-pos * frameHeight / 100}px)`;
 
-// Door color
-if (pos === 0) {
-    door.style.background = "#ef4444";      // Red - Closed
-}
-else if (pos === 100) {
-    door.style.background = "#22c55e";      // Green - Open
-}
-else {
-    door.style.background = "#f59e0b";      // Orange - Moving
+// Door colour according to state
+switch(Number(d.doorState)){
+
+    case 0: // Closed
+        door.style.background = "linear-gradient(180deg,#ef4444,#b91c1c)";
+        break;
+
+    case 1: // Opening
+        door.style.background = "linear-gradient(180deg,#f59e0b,#d97706)";
+        break;
+
+    case 2: // Open
+        door.style.background = "linear-gradient(180deg,#22c55e,#15803d)";
+        break;
+
+    case 3: // Closing
+        door.style.background = "linear-gradient(180deg,#3b82f6,#2563eb)";
+        break;
+
+    default:
+        door.style.background = "linear-gradient(180deg,#64748b,#475569)";
 }
 // ===== Live Chart Update =====
 
