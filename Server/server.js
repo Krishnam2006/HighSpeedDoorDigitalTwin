@@ -52,6 +52,18 @@ async function initDatabase() {
 
     `);
 
+    try {
+    await db.exec("ALTER TABLE door_logs ADD COLUMN closingLimit INTEGER");
+} catch (e) {}
+
+try {
+    await db.exec("ALTER TABLE door_logs ADD COLUMN openingLimit INTEGER");
+} catch (e) {}
+
+try {
+    await db.exec("ALTER TABLE door_logs ADD COLUMN motorLoad INTEGER");
+} catch (e) {}
+
     console.log("✅ Database Ready");
 
 }
@@ -181,7 +193,7 @@ app.get("/api/history", async (req, res) => {
 
     const rows = await db.all(
 
-        `SELECT
+        SELECT
         timestamp,
         controllerId,
         mode,
@@ -191,8 +203,11 @@ app.get("/api/history", async (req, res) => {
         cycle1,
         cycle2,
         doorState,
-        doorPosition
-        FROM door_logs
+        doorPosition,
+        closingLimit,
+        openingLimit,
+        motorLoad
+FROM door_logs
         ORDER BY id DESC
         LIMIT ?`,
 
