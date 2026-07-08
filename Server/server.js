@@ -19,6 +19,8 @@ async function initDatabase() {
         driver: sqlite3.Database
     });
 
+    console.log("Database Path:", "../Database/doors.db");
+
     await db.exec(`
 
         CREATE TABLE IF NOT EXISTS door_logs(
@@ -52,9 +54,12 @@ async function initDatabase() {
 
     `);
 
-    try {
+  try {
     await db.exec("ALTER TABLE door_logs ADD COLUMN closingLimit INTEGER");
-} catch (e) {}
+    console.log("closingLimit column added");
+} catch (e) {
+    console.log("closingLimit:", e.message);
+}
 
 try {
     await db.exec("ALTER TABLE door_logs ADD COLUMN openingLimit INTEGER");
@@ -193,27 +198,29 @@ app.get("/api/history", async (req, res) => {
 
     const rows = await db.all(
 
-        SELECT
-        timestamp,
-        controllerId,
-        mode,
-        safety,
-        emergency,
-        fault,
-        cycle1,
-        cycle2,
-        doorState,
-        doorPosition,
-        closingLimit,
-        openingLimit,
-        motorLoad
+`
+SELECT
+timestamp,
+controllerId,
+mode,
+safety,
+emergency,
+fault,
+cycle1,
+cycle2,
+doorState,
+doorPosition,
+closingLimit,
+openingLimit,
+motorLoad
 FROM door_logs
-        ORDER BY id DESC
-        LIMIT ?`,
+ORDER BY id DESC
+LIMIT ?
+`,
 
-        [limit]
+[limit]
 
-    );
+);
 
     res.json(rows);
 
