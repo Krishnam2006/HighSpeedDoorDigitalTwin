@@ -87,7 +87,7 @@ let latestData = {
     closingSpeed: 60,
     cycle1: 535,
     cycle2: 110,
-    emergency: 8,
+    emergency: 0,
     fault: 0,
     doorState: 0,
     doorPosition: 0
@@ -158,8 +158,9 @@ if (!dataChanged && !timeElapsed) {
         .substring(0, 19)
 );
 
-    await db.run(
-        // Update Smart Logging Memory
+    try {
+
+    const result = await db.run(
 
 `INSERT INTO door_logs(
 timestamp,
@@ -178,10 +179,10 @@ doorPosition,
 closingLimit,
 openingLimit,
 motorLoad
-
 )
 
 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+
 getISTTimestamp(),
 latestData.controllerId,
 latestData.mode,
@@ -198,8 +199,23 @@ latestData.doorPosition,
 latestData.closingLimit,
 latestData.openingLimit,
 latestData.motorLoad
-);
 
+    );
+
+    console.log("✅ INSERT SUCCESS");
+    console.log(result);
+
+    const count = await db.get("SELECT COUNT(*) AS total FROM door_logs");
+    console.log("Rows in DB:", count.total);
+
+} catch (err) {
+
+    console.log("❌ INSERT ERROR");
+    console.log(err);
+
+}
+const count = await db.get("SELECT COUNT(*) AS total FROM door_logs");
+console.log("Rows in DB:", count.total);
 lastSavedData = JSON.parse(JSON.stringify(latestData));
 
 lastSaveTime = now;
@@ -323,6 +339,16 @@ app.get("/api/predict", async (req, res) => {
         LIMIT 1
     `);
 
+if (!last) {
+    return res.json({
+        health: 100,
+        risk: "Low",
+        remainingCycles: 15000,
+        recommendation: "Waiting for data..."
+    });
+}
+
+    console.log(last);
     let health = 100;
 
     if(last.fault != 0)

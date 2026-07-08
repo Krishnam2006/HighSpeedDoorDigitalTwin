@@ -294,6 +294,7 @@ if (chartLabels.length > 20) {
 }
 
 doorChart.update();
+console.log("Emergency:", d.emergency, "Fault:", d.fault);
 updateAlarm(d);
 
 };
