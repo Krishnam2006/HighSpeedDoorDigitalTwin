@@ -133,6 +133,13 @@ if (!dataChanged && !timeElapsed) {
     console.log("Data Received:");
     console.log(latestData);
 
+    console.log("Saving Timestamp:",
+    new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000))
+        .toISOString()
+        .replace("T", " ")
+        .substring(0, 19)
+);
+
     await db.run(
         // Update Smart Logging Memory
 
