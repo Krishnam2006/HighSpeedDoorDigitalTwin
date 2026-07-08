@@ -330,45 +330,36 @@ app.get("/api/stats", async (req, res) => {
 // AI Prediction API
 // ===============================
 
-app.get("/api/predict", async (req, res) => {
+app.get("/api/predict", (req, res) => {
 
-    const last = await db.get(`
-        SELECT *
-        FROM door_logs
-        ORDER BY id DESC
-        LIMIT 1
-    `);
+    const last = latestData;
 
-if (!last) {
-    return res.json({
-        health: 100,
-        risk: "Low",
-        remainingCycles: 15000,
-        recommendation: "Waiting for data..."
-    });
-}
-
-    console.log(last);
     let health = 100;
 
-    if(last.fault != 0)
+    if (last.fault != 0)
         health -= 35;
 
-    if(last.emergency != 0)
+    if (last.emergency != 0)
         health -= 20;
 
-    if(last.safety != 8)
+    if (last.safety != 8)
         health -= 10;
 
-    if(last.cycle1 > 5000)
+    if (last.cycle1 > 1000)
+        health -= 5;
+
+    if (last.cycle1 > 5000)
         health -= 10;
+
+    if (health < 0)
+        health = 0;
 
     let risk = "Low";
 
-    if(health < 80)
+    if (health < 80)
         risk = "Medium";
 
-    if(health < 60)
+    if (health < 60)
         risk = "High";
 
     res.json({
@@ -377,17 +368,12 @@ if (!last) {
 
         risk,
 
-        remainingCycles: Math.max(0,15000-last.cycle1),
+        remainingCycles: Math.max(0, 15000 - (last.cycle1 || 0)),
 
         recommendation:
-
-        health > 80 ?
-
-        "System Healthy"
-
-        :
-
-        "Inspect Motor, Brake and Encoder"
+            health > 80
+                ? "System Healthy"
+                : "Inspect Motor, Brake and Encoder"
 
     });
 
