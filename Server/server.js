@@ -29,7 +29,7 @@ async function initDatabase() {
 
             controllerId TEXT,
 
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            timestamp DATETIME DEFAULT (datetime('now','+5 hours','+30 minutes'))
 
             mode INTEGER,
             safety INTEGER,
@@ -137,7 +137,7 @@ if (!dataChanged && !timeElapsed) {
         // Update Smart Logging Memory
 
 `INSERT INTO door_logs(
-
+timestamp,
 controllerId,
 mode,
 safety,
@@ -156,8 +156,12 @@ motorLoad
 
 )
 
-VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
 
+new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000))
+    .toISOString()
+    .replace("T", " ")
+    .substring(0, 19),
 latestData.controllerId,
 latestData.mode,
 latestData.safety,
