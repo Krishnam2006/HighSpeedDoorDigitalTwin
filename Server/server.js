@@ -43,7 +43,10 @@ async function initDatabase() {
             fault INTEGER,
 
             doorState INTEGER,
-            doorPosition INTEGER
+            doorPosition INTEGER,
+            closingLimit INTEGER,
+            openingLimit INTEGER,
+            motorLoad INTEGER
 
         )
 
@@ -116,10 +119,6 @@ if (!dataChanged && !timeElapsed) {
     await db.run(
         // Update Smart Logging Memory
 
-lastSavedData = JSON.parse(JSON.stringify(latestData));
-
-lastSaveTime = now;
-
 `INSERT INTO door_logs(
 
 controllerId,
@@ -133,11 +132,14 @@ cycle2,
 emergency,
 fault,
 doorState,
-doorPosition
+doorPosition,
+closingLimit,
+openingLimit,
+motorLoad
 
 )
 
-VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`,
+VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
 
 latestData.controllerId,
 latestData.mode,
@@ -150,9 +152,15 @@ latestData.cycle2,
 latestData.emergency,
 latestData.fault,
 latestData.doorState,
-latestData.doorPosition
-
+latestData.doorPosition,
+latestData.closingLimit,
+latestData.openingLimit,
+latestData.motorLoad
 );
+
+lastSavedData = JSON.parse(JSON.stringify(latestData));
+
+lastSaveTime = now;
 
     wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
