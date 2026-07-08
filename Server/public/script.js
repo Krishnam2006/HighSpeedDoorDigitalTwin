@@ -2,6 +2,7 @@ const protocol = window.location.protocol === "https:" ? "wss" : "ws";
 let lastAlarmMessage = "🟢 NO ACTIVE ALARM";
 let lastAlarmTime = 0;
 const ws = new WebSocket(`${protocol}://${window.location.host}`);
+let selectedController = "HSD_GUJ_001";
 // ===== Chart =====
 
 const chartLabels = [];
@@ -120,6 +121,8 @@ ws.onopen = () => {
 ws.onmessage = (event) => {
 
     const d = JSON.parse(event.data);
+    if (d.controllerId !== selectedController)
+    return;
 
     // Mode
 const modeText = {
@@ -505,3 +508,34 @@ status.style.color = "#ef4444";
 
 setInterval(checkConnection, 1000);
 checkConnection();
+async function loadControllers(){
+
+    const response = await fetch("/api/controllers");
+
+    const controllers = await response.json();
+
+    const select = document.getElementById("controllerSelect");
+
+    select.innerHTML = "";
+
+    controllers.forEach(c=>{
+
+        select.innerHTML += `
+        <option value="${c.controllerId}">
+            ${c.controllerId}
+        </option>`;
+
+    });
+
+}
+
+document.getElementById("controllerSelect")
+.addEventListener("change",(e)=>{
+
+    selectedController = e.target.value;
+
+});
+
+setInterval(loadControllers,5000);
+
+loadControllers();

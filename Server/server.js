@@ -7,6 +7,7 @@ const { open } = require("sqlite");
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
+let selectedController = "HSD_GUJ_001";
 
 app.use(express.json());
 app.use(express.static("public"));
@@ -78,6 +79,8 @@ try {
 let lastSavedData = null;
 let lastSaveTime = 0;
 
+const controllers = {};
+
 let latestData = {
     controllerId: "HSD_GUJ_001",
     mode: 0,
@@ -119,7 +122,7 @@ function getISTTimestamp() {
 app.post("/api/data", async (req, res) => {
 console.log("API HIT");
     latestData = req.body;
-    
+controllers[req.body.controllerId] = req.body;
     lastDataReceived = Date.now();
 
     // ===============================
@@ -138,7 +141,7 @@ const timeElapsed =
 // to database me save mat karo
 
 if (!dataChanged && !timeElapsed) {
-
+lastDataReceived = Date.now();
     wss.clients.forEach(client => {
 
         if (client.readyState === WebSocket.OPEN) {
@@ -348,6 +351,11 @@ app.get("/api/status", (req, res) => {
         lastSeen: diff
 
     });
+
+});
+app.get("/api/controllers", (req, res) => {
+
+    res.json(Object.values(controllers));
 
 });
 
