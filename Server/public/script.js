@@ -454,3 +454,47 @@ async function loadEvents(){
 setInterval(loadEvents,1000);
 
 loadEvents();
+async function checkConnection() {
+
+    try {
+
+        const response = await fetch("/api/status");
+        const data = await response.json();
+
+        const status = document.getElementById("connectionStatus");
+
+        if (data.status === "ONLINE") {
+
+            status.innerHTML = "🟢 Connected";
+            status.style.background = "#22c55e";
+
+        }
+
+        else if (data.status === "SLOW") {
+
+            status.innerHTML = "🟡 Slow Communication";
+            status.style.background = "#f59e0b";
+
+        }
+
+        else {
+
+            status.innerHTML = "🔴 Controller Offline";
+            status.style.background = "#ef4444";
+
+        }
+
+    }
+
+    catch {
+
+        const status = document.getElementById("connectionStatus");
+        status.innerHTML = "🔴 Server Offline";
+        status.style.background = "#ef4444";
+
+    }
+
+}
+
+setInterval(checkConnection, 1000);
+checkConnection();

@@ -92,6 +92,7 @@ let latestData = {
     doorState: 0,
     doorPosition: 0
 };
+let lastDataReceived = Date.now();
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
@@ -118,6 +119,8 @@ function getISTTimestamp() {
 app.post("/api/data", async (req, res) => {
 console.log("API HIT");
     latestData = req.body;
+    
+    lastDataReceived = Date.now();
 
     // ===============================
 // Smart Logging Check
@@ -322,6 +325,28 @@ app.get("/api/stats", async (req, res) => {
         totalFaults: totalFaults.faults || 0,
         emergencyCount: emergencyCount.emergency || 0,
         averagePosition: Math.round(avgPosition.avgPos || 0)
+    });
+
+});
+
+app.get("/api/status", (req, res) => {
+
+    const diff = Date.now() - lastDataReceived;
+
+    let status = "ONLINE";
+
+    if (diff > 5000)
+        status = "SLOW";
+
+    if (diff > 15000)
+        status = "OFFLINE";
+
+    res.json({
+
+        status,
+
+        lastSeen: diff
+
     });
 
 });
