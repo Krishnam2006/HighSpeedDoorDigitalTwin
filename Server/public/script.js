@@ -1,4 +1,6 @@
 const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+let lastAlarmMessage = "🟢 NO ACTIVE ALARM";
+let lastAlarmTime = 0;
 const ws = new WebSocket(`${protocol}://${window.location.host}`);
 // ===== Chart =====
 
@@ -376,37 +378,39 @@ function updateAlarm(d){
 
     const now = Date.now();
 
-    let currentAlarm = "";
+    let alarm = "";
 
     if(Number(d.fault) == 6)
-        currentAlarm = "🔴 MOTOR / BRAKE FAILURE";
+        alarm = "🔴 MOTOR / BRAKE FAILURE";
 
     else if(Number(d.fault) == 13)
-        currentAlarm = "🔴 INTERNAL ENCODER FAILURE";
+        alarm = "🔴 INTERNAL ENCODER FAILURE";
 
     else if(Number(d.fault) == 29)
-        currentAlarm = "🔴 EXTERNAL ENCODER FAILURE";
+        alarm = "🔴 EXTERNAL ENCODER FAILURE";
 
     else if(Number(d.emergency) != 0)
-        currentAlarm = "🟠 EMERGENCY STOP ACTIVE";
+        alarm = "🟠 EMERGENCY STOP ACTIVE";
+
+    else if(Number(d.safety) != 8)
+        alarm = "🟡 SAFETY CIRCUIT ACTIVE";
 
     else if(Number(d.cycle1) > 5000)
-        currentAlarm = "🟡 MAINTENANCE DUE SOON";
+        alarm = "🟡 MAINTENANCE DUE";
 
-    if(currentAlarm !== ""){
+    if(alarm !== ""){
 
-        lastFaultMessage = currentAlarm;
-        lastFaultTime = now;
+        lastAlarmMessage = alarm;
+        lastAlarmTime = now;
 
     }
 
-    if(now - lastFaultTime < 10000){
+    if(now - lastAlarmTime < 10000){
 
-        panel.innerHTML = lastFaultMessage;
+        panel.innerHTML = lastAlarmMessage;
         panel.style.color = "#ef4444";
 
-    }
-    else{
+    }else{
 
         panel.innerHTML = "🟢 NO ACTIVE ALARM";
         panel.style.color = "#22c55e";
