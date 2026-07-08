@@ -29,7 +29,7 @@ async function initDatabase() {
 
             controllerId TEXT,
 
-            timestamp DATETIME DEFAULT (datetime('now','+5 hours','+30 minutes'))
+            timestamp DATETIME DEFAULT (datetime('now','+5 hours','+30 minutes'));
 
             mode INTEGER,
             safety INTEGER,
