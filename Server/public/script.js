@@ -367,7 +367,7 @@ async function loadPrediction(){
 
 }
 
-setInterval(loadPrediction,3000);
+setInterval(loadPrediction,1000);
 
 loadPrediction();
 function updateAlarm(d){
@@ -437,6 +437,6 @@ async function loadEvents(){
 
 }
 
-setInterval(loadEvents,5000);
+setInterval(loadEvents,1000);
 
 loadEvents();

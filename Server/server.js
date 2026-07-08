@@ -129,7 +129,7 @@ const dataChanged =
     JSON.stringify(latestData) !== JSON.stringify(lastSavedData);
 
 const timeElapsed =
-    (now - lastSaveTime) > 5000;
+    (now - lastSaveTime) > 1000;
 
 // Agar data same hai aur 5 sec bhi nahi hue
 // to database me save mat karo
