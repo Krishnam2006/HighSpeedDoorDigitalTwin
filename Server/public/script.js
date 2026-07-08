@@ -224,23 +224,21 @@ document.getElementById("faultStatus").innerText =
 (d.fault == 0) ? "Normal" : "Fault";
 let state = "";
 
-if (d.doorPosition == 0) {
-
-    state = "Closed";
-
-}
-else if (d.doorPosition == 100) {
-
-    state = "Opened";
-
-}
-else {
-
-    if (d.doorState <= 3)
+switch (Number(d.doorState)) {
+    case 0:
+        state = "Closed";
+        break;
+    case 1:
         state = "Opening";
-
-    else
+        break;
+    case 2:
+        state = "Opened";
+        break;
+    case 3:
         state = "Closing";
+        break;
+    default:
+        state = "Unknown";
 }
 
 document.getElementById("doorState").innerText = state;
