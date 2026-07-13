@@ -384,6 +384,18 @@ document.getElementById("closeBtn").addEventListener("click",()=>{
     sendCommand("CLOSE");
 
 });
+
+document.getElementById("stopBtn").addEventListener("click", () => {
+
+    sendCommand("STOP");
+
+});
+
+document.getElementById("releaseBtn").addEventListener("click", () => {
+
+    sendCommand("RELEASE");
+
+});
 // ===============================
 // AI Prediction
 // ===============================
