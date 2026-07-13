@@ -13,12 +13,62 @@
 <body>
 
     <div class="container">
+<div class="sidebar">
+
+    <h2>AUROTOSHI</h2>
+
+    <button class="navBtn activeNav">🏠 Dashboard</button>
+
+    <button class="navBtn"
+        onclick="window.location='analytics.html'">
+        📈 Analytics
+    </button>
+
+    <button class="navBtn"
+        onclick="window.location='history.html'">
+        📊 History
+    </button>
+
+    <button class="navBtn">
+        🤖 AI Health
+    </button>
+
+    <button class="navBtn">
+        ⚙ Settings
+    </button>
+
+</div>
 
         <header class="header">
+            <div class="statusStrip">
+
+    <div class="statusItem">
+        <span>Controller</span>
+        <strong id="controllerIdTop">HSD_GUJ_001</strong>
+    </div>
+
+    <div class="statusItem">
+        <span>Connection</span>
+        <strong id="connectionTop">ONLINE</strong>
+    </div>
+
+    <div class="statusItem">
+        <span>Last Update</span>
+        <strong id="lastUpdateTop">--:--:--</strong>
+    </div>
+
+    <div class="statusItem">
+        <span>Firmware</span>
+        <strong>PE500B v1.0</strong>
+    </div>
+
+</div>
 
             <div>
-                <h1>🚀 High Speed Door Digital Twin</h1>
-                <p class="subtitle">Live Industrial Monitoring Dashboard</p>
+                <h1>AUROTOSHI Digital Twin Platform</h1>
+                <p class="subtitle">
+                 High Speed Door Monitoring & Predictive Maintenance
+                 </p>
             </div>
 
             <div class="topButtons">
@@ -47,22 +97,26 @@
 
         <div class="kpiGrid">
 
-            <div class="kpiCard">
+           <div class="kpiCard latencyCard"></div>
 
     <h3>⚡ Response Time</h3>
 
     <h1 id="latency">0 ms</h1>
 
 </div>
-            <div class="kpiCard">
+            <div class="kpiCard healthCard"></div>
 
                 <h3>🟢 System Health</h3>
 
                 <h1 id="health">100%</h1>
+                <p id="healthStatus"
+   style="margin-top:12px;font-size:18px;font-weight:bold;color:#22c55e;">
+    Excellent
+</p>
 
             </div>
 
-            <div class="kpiCard">
+            <div class="kpiCard doorCard">
 
                 <h3>🚪 Door Position</h3>
 
@@ -70,7 +124,7 @@
 
             </div>
 
-            <div class="kpiCard">
+            <div class="kpiCard cycleCard"></div>
 
                 <h3>🔄 Total Cycles</h3>
 
@@ -78,16 +132,7 @@
 
             </div>
 
-            <div class="kpiCard">
-
-                <h3>⚠ Fault Status</h3>
-
-                <h1 id="faultStatus">Normal</h1>
-                <p id="alertText" style="margin-top:10px;color:#facc15;">
-    System Healthy
-</p>
-
-<div class="kpiCard">
+<div class="kpiCard faultCard"></div>
 
     <h3>⚠ Fault Status</h3>
 
@@ -108,16 +153,19 @@
 
     <h2>🔔 Active Alarms</h2>
 
-    <div id="alarmPanel"
-        style="
-        background:#0f172a;
-        padding:20px;
-        border-radius:12px;
-        font-size:24px;
-        font-weight:bold;
-        text-align:center;">
+    <div id="alarmPanel">
 
-        🟢 No Active Alarm
+        <div class="alarmIcon">🟢</div>
+
+        <div class="alarmText">
+
+            <h3 id="alarmTitle">No Active Alarm</h3>
+
+            <p id="alarmDesc">
+                All monitored parameters are operating normally.
+            </p>
+
+        </div>
 
     </div>
 
@@ -144,7 +192,9 @@
         Position :
         <span id="doorPosition">0</span>%
     </p>
-
+<div id="doorBadge" class="doorBadge">
+    ● CLOSED
+</div>
 </div>
 
 <div class="card">

@@ -163,6 +163,14 @@ const faultText = {
     // System data
     document.getElementById("controllerId").innerText =
     d.controllerId;
+    document.getElementById("controllerIdTop").innerText =
+    d.controllerId;
+
+document.getElementById("lastUpdateTop").innerText =
+    new Date().toLocaleTimeString();
+
+document.getElementById("connectionTop").innerText =
+    "ONLINE";
     document.getElementById("lastUpdate").innerText =
     new Date().toLocaleTimeString();
     
@@ -227,6 +235,24 @@ if (health < 0)
     health = 0;
 
 document.getElementById("health").innerText = health + "%";
+const healthStatus = document.getElementById("healthStatus");
+
+if (health >= 90) {
+    healthStatus.innerText = "🟢 Excellent";
+    healthStatus.style.color = "#22c55e";
+}
+else if (health >= 75) {
+    healthStatus.innerText = "🟡 Good";
+    healthStatus.style.color = "#facc15";
+}
+else if (health >= 50) {
+    healthStatus.innerText = "🟠 Warning";
+    healthStatus.style.color = "#fb923c";
+}
+else {
+    healthStatus.innerText = "🔴 Critical";
+    healthStatus.style.color = "#ef4444";
+}
 
 // Fault Status
 
@@ -389,51 +415,49 @@ async function loadPrediction(){
 
 }
 
-setInterval(loadPrediction,1000);
+setInterval(loadPrediction,3000);
 
 loadPrediction();
 function updateAlarm(d){
 
     const panel = document.getElementById("alarmPanel");
+    const icon = document.querySelector(".alarmIcon");
+    const title = document.getElementById("alarmTitle");
+    const desc = document.getElementById("alarmDesc");
 
-    const now = Date.now();
+    if(d.fault != 0){
 
-    let alarm = "";
-
-    if(Number(d.fault) == 6)
-        alarm = "🔴 MOTOR / BRAKE FAILURE";
-
-    else if(Number(d.fault) == 13)
-        alarm = "🔴 INTERNAL ENCODER FAILURE";
-
-    else if(Number(d.fault) == 29)
-        alarm = "🔴 EXTERNAL ENCODER FAILURE";
-
-    else if(Number(d.emergency) != 0)
-        alarm = "🟠 EMERGENCY STOP ACTIVE";
-
-    else if(Number(d.safety) != 8)
-        alarm = "🟡 SAFETY CIRCUIT ACTIVE";
-
-    else if(Number(d.cycle1) > 5000)
-        alarm = "🟡 MAINTENANCE DUE";
-
-    if(alarm !== ""){
-
-        lastAlarmMessage = alarm;
-        lastAlarmTime = now;
+        panel.style.borderLeftColor = "#ef4444";
+        icon.innerText = "🔴";
+        title.innerText = "Motor Fault";
+        desc.innerText = "Immediate inspection required.";
 
     }
 
-    if(now - lastAlarmTime < 10000){
+    else if(d.emergency != 0){
 
-        panel.innerHTML = lastAlarmMessage;
-        panel.style.color = "#ef4444";
+        panel.style.borderLeftColor = "#f59e0b";
+        icon.innerText = "🟠";
+        title.innerText = "Emergency Stop";
+        desc.innerText = "Emergency circuit is active.";
 
-    }else{
+    }
 
-        panel.innerHTML = "🟢 NO ACTIVE ALARM";
-        panel.style.color = "#22c55e";
+    else if(Number(d.cycle1) > 5000){
+
+        panel.style.borderLeftColor = "#facc15";
+        icon.innerText = "🟡";
+        title.innerText = "Maintenance Due";
+        desc.innerText = "Cycle count exceeded maintenance threshold.";
+
+    }
+
+    else{
+
+        panel.style.borderLeftColor = "#22c55e";
+        icon.innerText = "🟢";
+        title.innerText = "No Active Alarm";
+        desc.innerText = "All monitored parameters are operating normally.";
 
     }
 
@@ -475,7 +499,7 @@ async function loadEvents(){
 
 }
 
-setInterval(loadEvents,1000);
+setInterval(loadEvents,3000);
 
 loadEvents();
 async function checkConnection() {
@@ -490,6 +514,8 @@ async function checkConnection() {
         if (data.status === "ONLINE") {
 
             status.innerHTML = "🟢 Connected";
+            document.getElementById("connectionTop").innerText =
+    "ONLINE";
             status.style.background = "";
 status.style.color = "#22c55e";
 
@@ -498,6 +524,8 @@ status.style.color = "#22c55e";
         else if (data.status === "SLOW") {
 
             status.innerHTML = "🟡 Slow Communication";
+            document.getElementById("connectionTop").innerText =
+    "SLOW";
             status.style.background = "";
 status.style.color = "#f59e0b";
 
@@ -506,6 +534,8 @@ status.style.color = "#f59e0b";
         else {
 
             status.innerHTML = "🔴 Controller Offline";
+            document.getElementById("connectionTop").innerText =
+    "OFFLINE";
             status.style.background = "";
 status.style.color = "#ef4444";
 
@@ -517,6 +547,8 @@ status.style.color = "#ef4444";
 
         const status = document.getElementById("connectionStatus");
         status.innerHTML = "🔴 Server Offline";
+        document.getElementById("connectionTop").innerText =
+    "SERVER OFFLINE";
         status.style.background = "#ef4444";
 
     }
