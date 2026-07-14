@@ -7,11 +7,12 @@ const { open } = require("sqlite");
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-let selectedController = "HSD_GUJ_001";
 
 app.use(express.json());
 app.use(express.static("public"));
 let db;
+let latestCommand = "NONE";
+let stopEnabled = false;
 
 async function initDatabase() {
 
@@ -446,13 +447,18 @@ app.get("/api/export", async (req, res) => {
 // Remote Control API
 // ===============================
 
-let latestCommand = "NONE";
-
 app.post("/api/control", (req, res) => {
 
     latestCommand = req.body.command;
 
-    console.log("📤 Command Received:", latestCommand);
+    if (latestCommand === "STOP")
+        stopEnabled = true;
+
+    if (latestCommand === "RELEASE")
+        stopEnabled = false;
+
+    console.log("📤 Command:", latestCommand);
+    console.log("Stop Lock:", stopEnabled);
 
     res.json({
         success: true
@@ -462,11 +468,18 @@ app.post("/api/control", (req, res) => {
 
 app.get("/api/control", (req, res) => {
 
+    if (stopEnabled) {
+
+        return res.json({
+            command: "STOP"
+        });
+
+    }
+
     res.json({
         command: latestCommand
     });
 
-    // Command sirf ek baar bhejna
     latestCommand = "NONE";
 
 });
