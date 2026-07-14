@@ -405,11 +405,19 @@ document.getElementById("stopBtn").addEventListener("click", () => {
 
     sendCommand("STOP");
 
+    doorLocked = true;
+
+    updateLockButton();
+
 });
 
 document.getElementById("releaseBtn").addEventListener("click", () => {
 
     sendCommand("RELEASE");
+
+    doorLocked = false;
+
+    updateLockButton();
 
 });
 // ===============================
@@ -610,6 +618,7 @@ document.getElementById("controllerSelect")
 .addEventListener("change",(e)=>{
 
     selectedController = e.target.value;
+    let doorLocked = false;
 
 });
 
@@ -626,5 +635,25 @@ document.querySelector(".sidebar")
 .classList.toggle("active");
 
 }
+
+}
+function updateLockButton(){
+
+    const btn = document.getElementById("releaseBtn");
+
+    if(doorLocked){
+
+        btn.style.background = "#f59e0b";
+        btn.style.color = "#000";
+        btn.innerText = "🔒 Door Locked";
+
+    }
+    else{
+
+        btn.style.background = "";
+        btn.style.color = "";
+        btn.innerText = "🔓 Door Unlock";
+
+    }
 
 }

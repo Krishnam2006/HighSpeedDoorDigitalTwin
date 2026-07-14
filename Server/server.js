@@ -465,24 +465,6 @@ app.post("/api/control", (req, res) => {
 
 });
 
-app.get("/api/control", (req, res) => {
-
-    if (stopEnabled) {
-
-        return res.json({
-            command: "STOP"
-        });
-
-    }
-
-    res.json({
-        command: latestCommand
-    });
-
-    latestCommand = "NONE";
-
-});
-
 // Browser connect
 wss.on("connection", ws => {
 
