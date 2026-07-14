@@ -469,18 +469,22 @@ app.post("/api/control", (req, res) => {
 app.get("/api/control", (req, res) => {
 
     if (stopEnabled) {
-
         return res.json({
             command: "STOP"
         });
-
     }
 
     res.json({
         command: latestCommand
     });
 
-    latestCommand = "NONE";
+    // Hold commands ko clear mat karo
+    if (
+        latestCommand !== "OPEN_HOLD" &&
+        latestCommand !== "CLOSE_HOLD"
+    ) {
+        latestCommand = "NONE";
+    }
 
 });
 
