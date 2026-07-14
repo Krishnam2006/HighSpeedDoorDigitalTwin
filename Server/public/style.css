@@ -14,6 +14,7 @@ body{
     color:#fff;
 
     min-height:100vh;
+    overflow-x:hidden;
 }
 
 .container{
@@ -656,6 +657,16 @@ canvas{
 
 }
 
+@media(max-width:768px){
+
+.sidebar{
+
+display:none;
+
+}
+
+}
+
 .navBtn{
 
     background:transparent;
@@ -755,5 +766,54 @@ canvas{
     .topGrid{
         grid-template-columns:1fr;
     }
+
+}
+@media (max-width: 768px){
+
+.container{
+    padding:10px;
+}
+
+.sidebar{
+    display:none;
+}
+
+.header{
+    margin-left:0;
+    width:100%;
+}
+
+.kpiGrid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.topGrid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.parameterGrid{
+    display:grid;
+    grid-template-columns:1fr;
+}
+
+.controlButtons{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.card{
+    width:100%;
+    box-sizing:border-box;
+}
+
+.analytics canvas{
+    width:100% !important;
+    height:250px !important;
+}
 
 }
