@@ -465,6 +465,26 @@ app.post("/api/control", (req, res) => {
 
 });
 
+app.get("/api/control", (req, res) => {
+
+    // Agar Door Lock active hai to hamesha STOP bhejo
+    if (stopEnabled) {
+
+        return res.json({
+            command: "STOP"
+        });
+
+    }
+
+    // Warna latest command bhejo
+    res.json({
+        command: latestCommand
+    });
+
+    // Command sirf ek baar execute hogi
+    latestCommand = "NONE";
+
+});
 // Browser connect
 wss.on("connection", ws => {
 
