@@ -600,3 +600,26 @@ document.getElementById("controllerSelect")
 setInterval(loadControllers,5000);
 
 loadControllers();
+const menuBtn=document.getElementById("menuBtn");
+
+if(menuBtn){
+
+menuBtn.onclick=()=>{
+
+document.querySelector(".sidebar")
+.classList.toggle("active");
+
+}
+
+}
+const menu=document.getElementById("menuBtn");
+
+if(menu){
+
+menu.onclick=function(){
+
+document.querySelector(".sidebar").classList.toggle("active");
+
+}
+
+}

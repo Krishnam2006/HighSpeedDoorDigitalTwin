@@ -657,16 +657,6 @@ canvas{
 
 }
 
-@media(max-width:768px){
-
-.sidebar{
-
-display:none;
-
-}
-
-}
-
 .navBtn{
 
     background:transparent;
@@ -815,5 +805,91 @@ display:none;
     width:100% !important;
     height:250px !important;
 }
+
+}
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+.menuBtn{
+    display:none;
+    font-size:30px;
+    background:none;
+    border:none;
+    color:white;
+    cursor:pointer;
+}
+
+@media (max-width:768px){
+
+    body{
+        overflow-x:hidden;
+    }
+
+    .menuBtn{
+        display:block;
+    }
+
+    .container{
+        margin-left:0;
+        width:100%;
+        padding:12px;
+    }
+
+    .header{
+        margin-left:0;
+        width:100%;
+    }
+
+    .sidebar{
+        position:fixed;
+        left:-260px;
+        top:0;
+        width:250px;
+        height:100vh;
+        z-index:999;
+        transition:.3s;
+        display:flex;
+    }
+
+    .sidebar.active{
+        left:0;
+    }
+
+    .statusStrip{
+        grid-template-columns:1fr;
+    }
+
+    .kpiGrid{
+        grid-template-columns:1fr;
+    }
+
+    .topGrid{
+        grid-template-columns:1fr;
+    }
+
+    .parameterGrid{
+        grid-template-columns:1fr;
+    }
+
+    .controlButtons{
+        display:flex;
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .controlButtons button{
+        width:100%;
+        font-size:18px;
+    }
+
+    .card{
+        width:100%;
+    }
+
+    canvas{
+        width:100%!important;
+        height:250px!important;
+    }
 
 }
