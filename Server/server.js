@@ -446,7 +446,6 @@ app.get("/api/export", async (req, res) => {
 // ===============================
 // Remote Control API
 // ===============================
-
 app.post("/api/control", (req, res) => {
 
     latestCommand = req.body.command;
@@ -469,22 +468,18 @@ app.post("/api/control", (req, res) => {
 app.get("/api/control", (req, res) => {
 
     if (stopEnabled) {
+
         return res.json({
             command: "STOP"
         });
+
     }
 
     res.json({
         command: latestCommand
     });
 
-    // Hold commands ko clear mat karo
-    if (
-        latestCommand !== "OPEN_HOLD" &&
-        latestCommand !== "CLOSE_HOLD"
-    ) {
-        latestCommand = "NONE";
-    }
+    latestCommand = "NONE";
 
 });
 
