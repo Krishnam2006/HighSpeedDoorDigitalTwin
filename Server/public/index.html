@@ -29,14 +29,17 @@
         📊 History
     </button>
 
-    <button class="navBtn">
-        🤖 AI Health
-    </button>
+    <h3 style="margin-top:30px;color:#94a3b8;">
+Controller
+</h3>
 
-    <button class="navBtn">
-        ⚙ Settings
-    </button>
+<select id="controllerSelect" class="sidebarSelect">
 
+    <option value="HSD_GUJ_001">
+        HSD_GUJ_001
+    </option>
+
+</select>
 </div>
 
 <header class="header">
@@ -51,9 +54,9 @@
     </div>
 
     <div class="statusItem">
-        <span>Connection</span>
-        <strong id="connectionTop">ONLINE</strong>
-    </div>
+    <span>Status</span>
+    <strong id="connectionStatus">🟢 Connected</strong>
+</div>
 
     <div class="statusItem">
         <span>Last Update</span>
@@ -74,27 +77,6 @@
                  </p>
             </div>
 
-            <div class="topButtons">
-
-    <select id="controllerSelect" class="historyBtn">
-        <option value="HSD_GUJ_001">
-            HSD_GUJ_001
-        </option>
-    </select>
-
-    <button class="historyBtn" onclick="window.location='history.html'">
-        📊 History
-    </button>
-
-    <button class="historyBtn" onclick="window.location='analytics.html'">
-        📈 Analytics
-    </button>
-
-    <div class="status" id="connectionStatus">
-        🟢 Connected
-    </div>
-
-</div>
 
 </header>
 
