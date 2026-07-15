@@ -229,6 +229,9 @@ document.getElementById("openingLimit").innerText =
 document.getElementById("closingLimit").innerText =
     d.closingLimit ?? "--";
 
+    document.getElementById("autoCloseTime").innerText =
+    (d.autoCloseTime ?? "--") + " s";
+
     document.getElementById("doorPosition").innerText = d.doorPosition;
     // KPI Cards
 
