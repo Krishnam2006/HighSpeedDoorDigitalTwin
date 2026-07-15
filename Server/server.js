@@ -368,66 +368,74 @@ app.get("/api/predict", (req, res) => {
 
     const last = latestData;
 
-    let health = 100;
+    const MAX_CYCLES = 15000;
 
-    if (last.fault != 0)
-        health -= 35;
-
-    if (last.emergency != 0)
-        health -= 20;
-
-    if (last.safety != 8)
-        health -= 10;
-
-    if (last.cycle1 > 1000)
-        health -= 5;
-
-    if (last.cycle1 > 5000)
-        health -= 10;
+    // Health based on cycle life
+    let health = Math.round(
+        ((MAX_CYCLES - (last.cycle1 || 0)) / MAX_CYCLES) * 100
+    );
 
     if (health < 0)
         health = 0;
 
+    // Additional penalties
+    if (last.fault != 0)
+        health -= 20;
+
+    if (last.emergency != 0)
+        health -= 10;
+
+    if (last.safety != 8)
+        health -= 5;
+
+    if (health < 0)
+        health = 0;
+
+    // Risk Level
     let risk = "Low";
 
-    if (health < 80)
+    if (health < 70)
         risk = "Medium";
 
-    if (health < 60)
+    if (health < 40)
         risk = "High";
 
+    // Recommendation
     let recommendation = "System Healthy";
 
-switch (Number(last.fault)) {
+    switch (Number(last.fault)) {
 
-    case 0:
-        recommendation = "System Healthy";
-        break;
+        case 0:
+            recommendation = "System Healthy";
+            break;
 
-    case 6:
-        recommendation = "Inspect Motor Wiring and Brake System";
-        break;
+        case 6:
+            recommendation = "Inspect Motor Wiring and Brake System";
+            break;
 
-    case 13:
-        recommendation = "Check Internal Encoder";
-        break;
+        case 13:
+            recommendation = "Check Internal Encoder";
+            break;
 
-    case 29:
-        recommendation = "Check External Encoder and Wiring";
-        break;
+        case 29:
+            recommendation = "Check External Encoder and Wiring";
+            break;
 
-    default:
-        recommendation = "Inspect Controller";
-}
+        default:
+            recommendation = "Inspect Controller";
+    }
+
     res.json({
 
-    health,
+        health,
 
-    risk,
+        risk,
 
-    remainingCycles: Math.max(0, 15000 - (last.cycle1 || 0)),
+        remainingCycles: Math.max(0, MAX_CYCLES - (last.cycle1 || 0)),
 
-    recommendation
+        recommendation
+
+    });
 
 });
 
