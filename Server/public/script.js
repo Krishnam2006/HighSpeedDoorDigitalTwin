@@ -3,6 +3,30 @@ let lastAlarmMessage = "🟢 NO ACTIVE ALARM";
 let lastAlarmTime = 0;
 const ws = new WebSocket(`${protocol}://${window.location.host}`);
 let selectedController = "HSD_GUJ_001";
+let doorLocked = false;
+
+function updateLockButton() {
+
+    const lockBtn = document.getElementById("stopBtn");
+    const unlockBtn = document.getElementById("releaseBtn");
+
+    if (doorLocked) {
+
+        lockBtn.style.background = "#ef4444";
+        lockBtn.style.color = "#fff";
+
+        unlockBtn.style.background = "";
+        unlockBtn.style.color = "";
+
+    } else {
+
+        unlockBtn.style.background = "#22c55e";
+        unlockBtn.style.color = "#fff";
+
+        lockBtn.style.background = "";
+        lockBtn.style.color = "";
+    }
+}
 // ===== Chart =====
 
 const chartLabels = [];
@@ -415,6 +439,16 @@ document.getElementById("stopBtn").addEventListener("click", () => {
 
 });
 
+document.getElementById("releaseBtn").addEventListener("click", () => {
+
+    sendCommand("RELEASE");
+
+    doorLocked = false;
+
+    updateLockButton();
+
+});
+
 
 // ===============================
 // AI Prediction
@@ -545,39 +579,39 @@ async function checkConnection() {
 
         if (data.status === "ONLINE") {
 
-            status.innerHTML = "🟢 Connected";
+            connectionStatus.innerHTML = "🟢 Connected";
             const connectionStatus = document.getElementById("connectionStatus");
 
 if (connectionStatus) {
     connectionStatus.innerHTML = "🟢 Connected";
     connectionStatus.style.color = "#22c55e";
 }
-            status.style.background = "";
-status.style.color = "#22c55e";
+            connectionStatus.style.background = "";
+connectionStatus.style.color = "#22c55e";
 
         }
 
         else if (data.status === "SLOW") {
 
-            status.innerHTML = "🟡 Slow Communication";
+            connectionStatus.innerHTML = "🟡 Slow Communication";
             if (connectionStatus) {
     connectionStatus.innerHTML = "🟡 Slow Communication";
     connectionStatus.style.color = "#f59e0b";
 }
-            status.style.background = "";
-status.style.color = "#f59e0b";
+            connectionStatus.style.background = "";
+connectionStatus.style.color = "#f59e0b";
 
         }
 
         else {
 
-            status.innerHTML = "🔴 Controller Offline";
+            connectionStatus.innerHTML = "🔴 Controller Offline";
            if (connectionStatus) {
     connectionStatus.innerHTML = "🔴 Controller Offline";
     connectionStatus.style.color = "#ef4444";
 }
-            status.style.background = "";
-status.style.color = "#ef4444";
+            connectionStatus.style.background = "";
+connectionStatus.style.color = "#ef4444";
 
         }
 
@@ -586,12 +620,12 @@ status.style.color = "#ef4444";
     catch {
 
         const connectionStatus = document.getElementById("connectionStatus");
-        status.innerHTML = "🔴 Server Offline";
+        connectionStatus.innerHTML = "🔴 Server Offline";
         if (connectionStatus) {
     connectionStatus.innerHTML = "🔴 Server Offline";
     connectionStatus.style.color = "#ef4444";
 }
-        status.style.background = "#ef4444";
+        connectionStatus.style.background = "#ef4444";
 
     }
 
@@ -631,6 +665,7 @@ document.getElementById("controllerSelect")
 setInterval(loadControllers,5000);
 
 loadControllers();
+updateLockButton();
 const menuBtn=document.getElementById("menuBtn");
 
 if(menuBtn){
