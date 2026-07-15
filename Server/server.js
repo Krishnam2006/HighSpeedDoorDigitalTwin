@@ -438,33 +438,6 @@ app.get("/api/predict", (req, res) => {
     });
 
 });
-
-// Fault-based recommendation
-
-switch (last.fault) {
-
-    case 0:
-        recommendation = "System Healthy";
-        break;
-
-    case 6:
-        recommendation = "Inspect motor wiring, brake mechanism and power supply.";
-        break;
-
-    case 13:
-        recommendation = "Check internal encoder connection or replace encoder.";
-        break;
-
-    case 29:
-        recommendation = "Inspect external encoder, shaft coupling and encoder cable.";
-        break;
-
-    default:
-        recommendation = "Inspect controller and resolve reported fault.";
-}
-
-});
-
 // ===============================
 // CSV Export
 // ===============================
