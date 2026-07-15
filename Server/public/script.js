@@ -580,59 +580,40 @@ async function checkConnection() {
         if (data.status === "ONLINE") {
 
             connectionStatus.innerHTML = "🟢 Connected";
-            const connectionStatus = document.getElementById("connectionStatus");
-
-if (connectionStatus) {
-    connectionStatus.innerHTML = "🟢 Connected";
-    connectionStatus.style.color = "#22c55e";
-}
-            connectionStatus.style.background = "";
-connectionStatus.style.color = "#22c55e";
+            connectionStatus.style.color = "#22c55e";
 
         }
 
         else if (data.status === "SLOW") {
 
             connectionStatus.innerHTML = "🟡 Slow Communication";
-            if (connectionStatus) {
-    connectionStatus.innerHTML = "🟡 Slow Communication";
-    connectionStatus.style.color = "#f59e0b";
-}
-            connectionStatus.style.background = "";
-connectionStatus.style.color = "#f59e0b";
+            connectionStatus.style.color = "#f59e0b";
 
         }
 
         else {
 
             connectionStatus.innerHTML = "🔴 Controller Offline";
-           if (connectionStatus) {
-    connectionStatus.innerHTML = "🔴 Controller Offline";
-    connectionStatus.style.color = "#ef4444";
-}
-            connectionStatus.style.background = "";
-connectionStatus.style.color = "#ef4444";
+            connectionStatus.style.color = "#ef4444";
 
         }
 
     }
 
-    catch {
+    catch (e) {
 
         const connectionStatus = document.getElementById("connectionStatus");
+
         connectionStatus.innerHTML = "🔴 Server Offline";
-        if (connectionStatus) {
-    connectionStatus.innerHTML = "🔴 Server Offline";
-    connectionStatus.style.color = "#ef4444";
-}
-        connectionStatus.style.background = "#ef4444";
+        connectionStatus.style.color = "#ef4444";
 
     }
 
 }
 
-setInterval(checkConnection, 1000);
+setInterval(checkConnection, 4000);
 checkConnection();
+
 async function loadControllers(){
 
     const response = await fetch("/api/controllers");
@@ -658,7 +639,8 @@ document.getElementById("controllerSelect")
 .addEventListener("change",(e)=>{
 
     selectedController = e.target.value;
-    let doorLocked = false;
+   doorLocked=false;
+updateLockButton();
 
 });
 
