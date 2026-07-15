@@ -396,6 +396,29 @@ app.get("/api/predict", (req, res) => {
     if (health < 60)
         risk = "High";
 
+    let recommendation = "System Healthy";
+
+switch (Number(last.fault)) {
+
+    case 0:
+        recommendation = "System Healthy";
+        break;
+
+    case 6:
+        recommendation = "Inspect Motor Wiring and Brake System";
+        break;
+
+    case 13:
+        recommendation = "Check Internal Encoder";
+        break;
+
+    case 29:
+        recommendation = "Check External Encoder and Wiring";
+        break;
+
+    default:
+        recommendation = "Inspect Controller";
+}
     res.json({
 
     health,
