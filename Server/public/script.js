@@ -171,8 +171,12 @@ const faultText = {
 document.getElementById("lastUpdateTop").innerText =
     new Date().toLocaleTimeString();
 
-document.getElementById("connectionTop").innerText =
-    "ONLINE";
+const connectionStatus = document.getElementById("connectionStatus");
+
+if (connectionStatus) {
+    connectionStatus.innerHTML = "🟢 Connected";
+    connectionStatus.style.color = "#22c55e";
+}
     document.getElementById("lastUpdate").innerText =
     new Date().toLocaleTimeString();
     
@@ -411,15 +415,7 @@ document.getElementById("stopBtn").addEventListener("click", () => {
 
 });
 
-document.getElementById("releaseBtn").addEventListener("click", () => {
 
-    sendCommand("RELEASE");
-
-    doorLocked = false;
-
-    updateLockButton();
-
-});
 // ===============================
 // AI Prediction
 // ===============================
@@ -545,13 +541,17 @@ async function checkConnection() {
         const response = await fetch("/api/status");
         const data = await response.json();
 
-        const status = document.getElementById("connectionStatus");
+        const connectionStatus = document.getElementById("connectionStatus");
 
         if (data.status === "ONLINE") {
 
             status.innerHTML = "🟢 Connected";
-            document.getElementById("connectionTop").innerText =
-    "ONLINE";
+            const connectionStatus = document.getElementById("connectionStatus");
+
+if (connectionStatus) {
+    connectionStatus.innerHTML = "🟢 Connected";
+    connectionStatus.style.color = "#22c55e";
+}
             status.style.background = "";
 status.style.color = "#22c55e";
 
@@ -560,8 +560,10 @@ status.style.color = "#22c55e";
         else if (data.status === "SLOW") {
 
             status.innerHTML = "🟡 Slow Communication";
-            document.getElementById("connectionTop").innerText =
-    "SLOW";
+            if (connectionStatus) {
+    connectionStatus.innerHTML = "🟡 Slow Communication";
+    connectionStatus.style.color = "#f59e0b";
+}
             status.style.background = "";
 status.style.color = "#f59e0b";
 
@@ -570,8 +572,10 @@ status.style.color = "#f59e0b";
         else {
 
             status.innerHTML = "🔴 Controller Offline";
-            document.getElementById("connectionTop").innerText =
-    "OFFLINE";
+           if (connectionStatus) {
+    connectionStatus.innerHTML = "🔴 Controller Offline";
+    connectionStatus.style.color = "#ef4444";
+}
             status.style.background = "";
 status.style.color = "#ef4444";
 
@@ -581,10 +585,12 @@ status.style.color = "#ef4444";
 
     catch {
 
-        const status = document.getElementById("connectionStatus");
+        const connectionStatus = document.getElementById("connectionStatus");
         status.innerHTML = "🔴 Server Offline";
-        document.getElementById("connectionTop").innerText =
-    "SERVER OFFLINE";
+        if (connectionStatus) {
+    connectionStatus.innerHTML = "🔴 Server Offline";
+    connectionStatus.style.color = "#ef4444";
+}
         status.style.background = "#ef4444";
 
     }
@@ -635,25 +641,5 @@ document.querySelector(".sidebar")
 .classList.toggle("active");
 
 }
-
-}
-function updateLockButton(){
-
-    const btn = document.getElementById("releaseBtn");
-
-    if(doorLocked){
-
-        btn.style.background = "#f59e0b";
-        btn.style.color = "#000";
-        btn.innerText = "🔒 Door Locked";
-
-    }
-    else{
-
-        btn.style.background = "";
-        btn.style.color = "";
-        btn.innerText = "🔓 Door Unlock";
-
-    }
 
 }
