@@ -243,26 +243,26 @@ document.getElementById("totalCycle").innerText = d.cycle1;
 // Smart Health Score
 // ===============================
 
-let health = 100;
+const MAX_CYCLES = 750;
 
-// Fault
+let health = Math.round(
+    ((MAX_CYCLES - Number(d.cycle1 || 0)) / MAX_CYCLES) * 100
+);
+
+if (health < 0) health = 0;
+if (health > 100) health = 100;
+
+// Fault penalty
 if (d.fault != 0)
-    health -= 35;
-
-// Emergency
-if (d.emergency == 8)
     health -= 20;
 
-// Safety Trigger
+// Emergency penalty
+if (d.emergency != 0)
+    health -= 10;
+
+// Safety penalty
 if (d.safety != 8)
-    health -= 10;
-
-// High Cycle Count
-if (d.cycle1 > 1000)
     health -= 5;
-
-if (d.cycle1 > 5000)
-    health -= 10;
 
 if (health < 0)
     health = 0;
