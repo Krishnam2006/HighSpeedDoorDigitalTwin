@@ -391,12 +391,21 @@ app.get("/api/predict", (req, res) => {
 
     const MAX_CYCLES = 1000;
 
-// Health based on cycle life
-let health = Math.round(
-    ((MAX_CYCLES - (last.cycle1 || 0)) / MAX_CYCLES) * 100
-);
+const cycles = Number(last.cycle1 || 0);
 
-const remainingCycles = Math.max(0, MAX_CYCLES - (last.cycle1 || 0));
+// Remaining Cycles
+const remainingCycles = Math.max(0, MAX_CYCLES - cycles);
+
+// Health changes every 5%
+const step = MAX_CYCLES / 20;   // 1000/20 = 50 cycles
+
+let health = 100 - (Math.floor(cycles / step) * 5);
+
+if (health > 100)
+    health = 100;
+
+if (health < 0)
+    health = 0;
 
 if (remainingCycles <= 0 && !autoLocked) {
 
