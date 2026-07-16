@@ -424,9 +424,6 @@ if (remainingCycles > 0) {
 
 }
 
-    if (health < 0)
-        health = 0;
-
     // Additional penalties
     if (last.fault != 0)
         health -= 20;
