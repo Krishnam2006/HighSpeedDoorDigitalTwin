@@ -93,6 +93,7 @@ try {
 }
 
 console.log("✅ Database Ready");
+}
 
 // Smart Logging
 
