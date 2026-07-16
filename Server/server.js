@@ -389,15 +389,18 @@ app.get("/api/predict", (req, res) => {
 
     const MAX_CYCLES = 750;
 
-    // Health based on cycle life
-    let health = Math.round(
- const remainingCycles = Math.max(0, MAX_CYCLES - (last.cycle1 || 0));
+// Health based on cycle life
+let health = Math.round(
+    ((MAX_CYCLES - (last.cycle1 || 0)) / MAX_CYCLES) * 100
+);
+
+const remainingCycles = Math.max(0, MAX_CYCLES - (last.cycle1 || 0));
 
 if (remainingCycles <= 0 && !autoLocked) {
 
     autoLocked = true;
 
-    latestCommand = "STOP";   // Door Lock command
+    latestCommand = "STOP";
 
     console.log("🔒 Door Auto Locked");
 
