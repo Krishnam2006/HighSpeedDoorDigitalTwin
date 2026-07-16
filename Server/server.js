@@ -471,6 +471,15 @@ if (remainingCycles > 0) {
             recommendation = "Inspect Controller";
     }
 
+    console.log({
+    cycle: cycles,
+    health: health,
+    remainingCycles: remainingCycles,
+    fault: last.fault,
+    emergency: last.emergency,
+    safety: last.safety
+});
+
     res.json({
 
     health,

@@ -243,31 +243,6 @@ document.getElementById("totalCycle").innerText = d.cycle1;
 // Smart Health Score
 // ===============================
 
-const MAX_CYCLES = 750;
-
-let health = Math.round(
-    ((MAX_CYCLES - Number(d.cycle1 || 0)) / MAX_CYCLES) * 100
-);
-
-if (health < 0) health = 0;
-if (health > 100) health = 100;
-
-// Fault penalty
-if (d.fault != 0)
-    health -= 20;
-
-// Emergency penalty
-if (d.emergency != 0)
-    health -= 10;
-
-// Safety penalty
-if (d.safety != 8)
-    health -= 5;
-
-if (health < 0)
-    health = 0;
-
-document.getElementById("health").innerText = health + "%";
 const healthStatus = document.getElementById("healthStatus");
 
 if (health >= 90) {
@@ -340,7 +315,7 @@ if (d.fault != 0)
 else if (d.emergency == 8)
     alert = "🟠 Emergency Active";
 
-else if (health < 70)
+else if (Number(d.cycle1) > 800)
     alert = "🟡 Maintenance Recommended";
 
 document.getElementById("alertText").innerText = alert;
@@ -474,6 +449,26 @@ async function loadPrediction(){
         document.getElementById("recommendation").innerText =
             ai.recommendation;
 
+document.getElementById("health").innerText = ai.health + "%";
+
+const healthStatus = document.getElementById("healthStatus");
+
+if (ai.health >= 90) {
+    healthStatus.innerText = "🟢 Excellent";
+    healthStatus.style.color = "#22c55e";
+}
+else if (ai.health >= 75) {
+    healthStatus.innerText = "🟡 Good";
+    healthStatus.style.color = "#facc15";
+}
+else if (ai.health >= 50) {
+    healthStatus.innerText = "🟠 Warning";
+    healthStatus.style.color = "#fb923c";
+}
+else {
+    healthStatus.innerText = "🔴 Critical";
+    healthStatus.style.color = "#ef4444";
+}
     }
 
     catch(e){
