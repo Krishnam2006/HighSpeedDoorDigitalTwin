@@ -387,6 +387,7 @@ app.get("/api/controllers", (req, res) => {
 app.get("/api/predict", (req, res) => {
 
     const last = latestData;
+    console.log("Cycle1 in Predict:", latestData.cycle1);
 
     const MAX_CYCLES = 750;
 
