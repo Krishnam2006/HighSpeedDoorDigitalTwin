@@ -401,6 +401,7 @@ if (remainingCycles <= 0 && !autoLocked) {
     autoLocked = true;
 
     latestCommand = "STOP";
+     stopEnabled = true;
 
     console.log("🔒 Door Auto Locked");
 
