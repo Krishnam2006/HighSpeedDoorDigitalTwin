@@ -389,7 +389,7 @@ app.get("/api/predict", (req, res) => {
     const last = latestData;
     console.log("Cycle1 in Predict:", latestData.cycle1);
 
-    const MAX_CYCLES = 750;
+    const MAX_CYCLES = 1000;
 
 // Health based on cycle life
 let health = Math.round(
