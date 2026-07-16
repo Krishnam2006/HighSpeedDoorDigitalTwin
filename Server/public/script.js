@@ -484,7 +484,7 @@ async function loadPrediction(){
 
 }
 
-setInterval(loadPrediction,3000);
+setInterval(loadPrediction,1000);
 
 loadPrediction();
 function updateAlarm(d){
@@ -568,7 +568,7 @@ async function loadEvents(){
 
 }
 
-setInterval(loadEvents,3000);
+setInterval(loadEvents,2000);
 
 loadEvents();
 async function checkConnection() {
@@ -647,7 +647,7 @@ updateLockButton();
 
 });
 
-setInterval(loadControllers,5000);
+setInterval(loadControllers,8000);
 
 loadControllers();
 updateLockButton();

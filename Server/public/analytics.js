@@ -16,7 +16,7 @@ async function loadAnalytics() {
 
         position.push(row.doorPosition);
 
-        cycles.push(row.cycle1);
+        cycles.push(row.Total Cycles);
 
     });
 

@@ -13,6 +13,7 @@ app.use(express.static("public"));
 let db;
 let latestCommand = "NONE";
 let stopEnabled = false;
+let autoLocked = false;
 
 async function initDatabase() {
 
@@ -368,12 +369,27 @@ app.get("/api/predict", (req, res) => {
 
     const last = latestData;
 
-    const MAX_CYCLES = 15000;
+    const MAX_CYCLES = 750;
 
     // Health based on cycle life
     let health = Math.round(
-        ((MAX_CYCLES - (last.cycle1 || 0)) / MAX_CYCLES) * 100
-    );
+ const remainingCycles = Math.max(0, MAX_CYCLES - (last.cycle1 || 0));
+
+if (remainingCycles <= 0 && !autoLocked) {
+
+    autoLocked = true;
+
+    latestCommand = "STOP";   // Door Lock command
+
+    console.log("🔒 Door Auto Locked");
+
+}
+
+if (remainingCycles > 0) {
+
+    autoLocked = false;
+
+}
 
     if (health < 0)
         health = 0;
@@ -427,15 +443,15 @@ app.get("/api/predict", (req, res) => {
 
     res.json({
 
-        health,
+    health,
 
-        risk,
+    risk,
 
-        remainingCycles: Math.max(0, MAX_CYCLES - (last.cycle1 || 0)),
+    remainingCycles,
 
-        recommendation
+    recommendation
 
-    });
+});
 
 });
 // ===============================
