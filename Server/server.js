@@ -56,25 +56,43 @@ async function initDatabase() {
         )
 
     `);
-
-  try {
+try {
     await db.exec("ALTER TABLE door_logs ADD COLUMN closingLimit INTEGER");
-    console.log("closingLimit column added");
+    console.log("✅ closingLimit column added");
 } catch (e) {
-    console.log("closingLimit:", e.message);
+    if (!e.message.includes("duplicate column")) {
+        console.log(e.message);
+    }
 }
 
 try {
     await db.exec("ALTER TABLE door_logs ADD COLUMN openingLimit INTEGER");
-} catch (e) {}
+    console.log("✅ openingLimit column added");
+} catch (e) {
+    if (!e.message.includes("duplicate column")) {
+        console.log(e.message);
+    }
+}
 
 try {
     await db.exec("ALTER TABLE door_logs ADD COLUMN motorLoad INTEGER");
-} catch (e) {}
-
-    console.log("✅ Database Ready");
-
+    console.log("✅ motorLoad column added");
+} catch (e) {
+    if (!e.message.includes("duplicate column")) {
+        console.log(e.message);
+    }
 }
+
+try {
+    await db.exec("ALTER TABLE door_logs ADD COLUMN autoCloseTime INTEGER");
+    console.log("✅ autoCloseTime column added");
+} catch (e) {
+    if (!e.message.includes("duplicate column")) {
+        console.log(e.message);
+    }
+}
+
+console.log("✅ Database Ready");
 
 // Smart Logging
 
